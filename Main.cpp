@@ -41,12 +41,13 @@ bool ParseCmd(const string& str, Zoo& jz)
 	}
 	else if (str == "Mate Asian elephant")
 	{
-		string strName;
+		string strMaleName,strFemaleName;
 
 		cout << "Please input the name of the male elephant!" << endl;
-		getline(cin, strName);
-
+		getline(cin, strMaleName);
 		cout << "Please input the name of the female elephant!" << endl;
+		getline(cin, strFemaleName);
+		bool bPreg = jz.MateAsianElephant (strMaleName, strFemaleName);
 	}
 	else if (str == "Show me the status")
 	{

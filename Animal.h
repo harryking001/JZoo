@@ -6,6 +6,7 @@ class Animal :
 	public Biological
 {
 	friend class ArchiveFile;
+	friend class Zoo;
 public:
 	Animal();
 	Animal(Uint Id, string Name, Uint BirthTicks, gender Gd);

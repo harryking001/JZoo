@@ -42,13 +42,44 @@ void Zoo::UpdateSpeciesNum()
 
 }
 
-Asian_Elephant & Zoo::Find(const string name)
+Asian_Elephant * Zoo::Find(const string name)
 {
 	vector<Asian_Elephant>::iterator it = asEle_vec.begin();
 	for (; it != asEle_vec.end(); it++)
 	{
-		if(it->)
+		if(it->name == name)//Zoo需要访问Biological的name属性
+			return &*it;//将迭代器转换为指针（迭代器是一个类，重载了operator*()操作符，表示容器中相应的对象，再使用&获取容器元素对象的指针）
 	}
+	return NULL;
+}
+
+MATEMSG Zoo::MateAsianElephant(const string maleName, const string femaleName)
+{
+	Asian_Elephant* maleAse = Find(maleName);
+	Asian_Elephant* femaleAse = Find(femaleName);
+	if(femaleAse && femaleAse)
+	{
+        //Zoo需要访问Animal的name属性以及Asian_Elephant的MATEAGETICK及MATEINTERTICK属性
+		if(maleAse->gd!=MALE || femaleAse->gd!=FEMALE)
+			return SEX_WRONG;
+		else if(maleAse->ageTicks < maleAse->MATEAGETICK)
+			return MALE_UNDERMATEAGE;
+		else if(femaleAse->ageTicks < femaleAse->MATEAGETICK)
+		    return FEMALE_UNDERMATEAGE;
+		else if(maleAse->mateTicks < maleAse->MATEINTERTICK)
+		    return MALE_NOTREADY;
+		else if(femaleAse->mateTicks < femaleAse->MATEINTERTICK)
+			return FEMALE_NOTREADY;
+	}
+	bool bPreg = maleAse->Mate(femaleAse);
+	if(bPreg)
+	{
+		maleAse->pregTicks = 0;
+		maleAse->preg = true;
+		return PREGNANT;
+	}
+	else
+		return NOTPREGNANT;
 }
 
 void Zoo::CreateZooClock()

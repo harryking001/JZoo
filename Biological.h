@@ -7,6 +7,7 @@ using std::string;
 class Biological
 {
 	friend class ArchiveFile;
+	friend class Zoo;
 public:
 	Biological();
 	Biological(Uint Id, string Name, Uint BirthTicks);

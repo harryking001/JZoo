@@ -40,7 +40,8 @@ public:
 		asEle_vec.push_back(ase);
 		IncAnimalNum();
 	}
-	Asian_Elephant& Find(const string name);
+	Asian_Elephant* Find(const string name);
+	MATEMSG MateAsianElephant(const string maleName, const string femaleName);
 private:
 	void CreateZooClock();
 private:

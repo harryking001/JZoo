@@ -43,10 +43,10 @@ void Asian_Elephant::Excrete()
 {
 }
 
-bool Asian_Elephant::Mate(Asian_Elephant& ase)
+bool Asian_Elephant::Mate(Asian_Elephant* ase)
 {
 	bool bPreg = false;
-	if (gd != ase.gd && ageTicks> MATEAGETICK && ase.ageTicks > MATEAGETICK)
+	if (gd != ase->gd && ageTicks> MATEAGETICK && ase->ageTicks > MATEAGETICK)
 	{
 		bPreg = ::IsHappened(PREG_PROB);
 	}
