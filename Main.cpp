@@ -42,12 +42,41 @@ bool ParseCmd(const string& str, Zoo& jz)
 	else if (str == "Mate Asian elephant")
 	{
 		string strMaleName,strFemaleName;
-
 		cout << "Please input the name of the male elephant!" << endl;
 		getline(cin, strMaleName);
 		cout << "Please input the name of the female elephant!" << endl;
 		getline(cin, strFemaleName);
-		bool bPreg = jz.MateAsianElephant (strMaleName, strFemaleName);
+		MATEMSG mateMsg = jz.MateAsianElephant (strMaleName, strFemaleName);
+		switch(mateMsg)
+		{
+		case PREGNANT:
+			cout << "Congratulations! "+ strFemaleName + " is pregnant!" << endl;
+			break;
+		case NOTPREGNANT:
+			cout << strFemaleName + " and " + strMaleName + " had a good time!" << endl;
+			break;
+		case MALE_UNDERMATEAGE:
+			cout << strMaleName + " is under mating age!" << endl;
+			break;
+		case FEMALE_UNDERMATEAGE:
+			cout << strFemaleName + " is under mating age!" << endl;
+			break;
+		case MALE_NOTREADY:
+			cout << strMaleName + " is not ready!" << endl;
+			break;
+		case FEMALE_NOTREADY:
+			cout << strFemaleName + " is not ready!" << endl;
+			break;
+		case SEX_WRONG:
+			cout << "Wrong sex!" << endl;
+			break;
+		case MISSING_MALE:
+			cout << strMaleName + "is not our child!" << endl;
+			break;
+		case MISSING_FEMALE:
+			cout << strFemaleName + "is not our child!" << endl;
+			break;
+		}
 	}
 	else if (str == "Show me the status")
 	{

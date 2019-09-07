@@ -71,6 +71,14 @@ MATEMSG Zoo::MateAsianElephant(const string maleName, const string femaleName)
 		else if(femaleAse->mateTicks < femaleAse->MATEINTERTICK)
 			return FEMALE_NOTREADY;
 	}
+	else if(!maleAse)
+	{
+		return MISSING_MALE;
+	}
+	else if(!femaleAse)
+	{
+		return MISSING_FEMALE;
+	}
 	bool bPreg = maleAse->Mate(femaleAse);
 	if(bPreg)
 	{
@@ -84,7 +92,7 @@ MATEMSG Zoo::MateAsianElephant(const string maleName, const string femaleName)
 
 void Zoo::CreateZooClock()
 {
-	std::thread t1(RunZooClock,this);
+	std::thread t1(::RunZooClock,this);
 	t1.detach();
 }
 
