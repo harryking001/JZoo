@@ -18,8 +18,8 @@ public:
 	virtual void Eat() = 0;
 	virtual void Excrete() = 0;
 	//virtual bool Mate(Animal&) = 0;
-	virtual int CheckHungry();
-	virtual inline bool CheckPreg() { return preg; }
+	virtual int CheckHungry() const = 0;
+	virtual inline bool IsPreg() const{ return preg; }
 protected:
 	Uint weight;
 	Uint height;

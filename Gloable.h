@@ -11,7 +11,7 @@ enum gender
 	FEMALE
 };
 
-enum MATEMSG
+enum mateMsg
 {
 	PREGNANT,
 	NOTPREGNANT,
@@ -22,6 +22,15 @@ enum MATEMSG
 	SEX_WRONG,
 	MISSING_MALE,
 	MISSING_FEMALE,
+	
+};
+
+enum hungryMsg
+{
+	NOTHUNGRY,
+	HUNGRY,
+	HUNGRYWARNING,
+	HUNGRYDIE
 };
 
 const Uint BABY_ASE_PRICE = 50000;
@@ -30,6 +39,7 @@ const double PREG_PROB = 0.1;
 const int ERROR = -1;
 const int TRUE = 1;
 const int FALSE = 0;
+
 
 int IsHappened(double p)
 {

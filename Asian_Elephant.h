@@ -21,9 +21,12 @@ public:
 	void Excrete();
 	bool Mate(Asian_Elephant*);
 	void Grow(Uint Ticks);
-
+	virtual int CheckHungry() const;
 private:
 	const Uint MATEAGETICK = 100000;
 	const Uint MATEINTERTICK = 5000;
+	const Uint HUNGRYGTICKS = 3000;
+	const Uint HUNGRYWARNINGTICKS = 5000;
+	const Uint HUNGRYDIETICKS = 6000;
 };
 

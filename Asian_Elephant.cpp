@@ -26,6 +26,10 @@ Asian_Elephant::~Asian_Elephant()
 
 Asian_Elephant * Asian_Elephant::Breed()
 {
+	if (!preg)
+		return NULL;
+	preg = false;
+	pregTicks = 0;
 	Asian_Elephant* pAsEle = new Asian_Elephant();
 	return pAsEle;
 }
@@ -48,6 +52,7 @@ bool Asian_Elephant::Mate(Asian_Elephant* ase)
 	bool bPreg = false;
 	if (gd != ase->gd && ageTicks> MATEAGETICK && ase->ageTicks > MATEAGETICK)
 	{
+		mateTicks = 0;
 		bPreg = ::IsHappened(PREG_PROB);
 	}
 	else
@@ -70,6 +75,18 @@ void Asian_Elephant::Grow(Uint Ticks)
 	height = 1500 + ageTicks;
 	width = 800 + ageTicks;
 	length = 1600 + ageTicks;
+}
+
+int Asian_Elephant::CheckHungry() const
+{
+	if (hungryTicks > HUNGRYGTICKS)
+		return HUNGRY;
+	else if (hungryTicks > HUNGRYWARNINGTICKS)
+		return HUNGRYWARNING;
+	else if (hungryTicks > HUNGRYDIETICKS)
+		return HUNGRYDIE;
+	else
+		return NOTHUNGRY;
 }
 
 

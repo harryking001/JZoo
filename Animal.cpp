@@ -26,16 +26,4 @@ void Animal::Die()
 {
 }
 
-int Animal::CheckHungry()
-{
-	if (hungryTicks > 3000)
-		return 1;
-	else if (hungryTicks > 5000)
-		return 2;
-	else if (hungryTicks > 6000)
-		return 3;
-	else
-		return 0;
-	return 0;
-}
 
