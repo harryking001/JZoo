@@ -20,6 +20,7 @@ public:
 	//virtual bool Mate(Animal&) = 0;
 	virtual int CheckHungry() const = 0;
 	virtual inline bool IsPreg() const{ return preg; }
+	virtual bool CheckBreed() const = 0;
 protected:
 	Uint weight;
 	Uint height;

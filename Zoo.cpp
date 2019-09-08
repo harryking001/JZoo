@@ -22,8 +22,9 @@ void RunZooClock(Zoo* z)
 				break;
 					
 			}
-			bool bPreg = it->IsPreg();
-			if(bPreg)
+			bool bBreed = it->CheckBreed();
+			if (bBreed)
+				it->Breed();
 		}
 		Sleep(1000);
 	}
@@ -99,8 +100,8 @@ mateMsg Zoo::MateAsianElephant(const string maleName, const string femaleName)
 	bool bPreg = maleAse->Mate(femaleAse);
 	if(bPreg)
 	{
-		maleAse->pregTicks = 0;
-		maleAse->preg = true;
+		femaleAse->pregTicks = 0;
+		femaleAse->preg = true;
 		return PREGNANT;
 	}
 	else
