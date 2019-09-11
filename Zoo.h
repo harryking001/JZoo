@@ -1,9 +1,11 @@
 #pragma once
 #include "Asian_Elephant.h"
 #include <vector>
+#include <queue>
 #include <thread>
 #include <Windows.h>
 using std::vector;
+using std::queue;
 using std::to_string;
 
 
@@ -42,6 +44,7 @@ public:
 	}
 	Asian_Elephant* Find(const string name);
 	mateMsg MateAsianElephant(const string maleName, const string femaleName);
+	string PopMsg();
 private:
 	void CreateZooClock();
 private:
@@ -53,5 +56,6 @@ private:
 	ULLong funds;
 	Uint opTicks;
 	vector<Asian_Elephant> asEle_vec;
+	queue<string> zooMsg_que;
 };
 

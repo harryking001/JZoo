@@ -7,6 +7,7 @@ class Animal :
 {
 	friend class ArchiveFile;
 	friend class Zoo;
+	friend void RunZooClock(Zoo* z);
 public:
 	Animal();
 	Animal(Uint Id, string Name, Uint BirthTicks, gender Gd);

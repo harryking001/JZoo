@@ -9,19 +9,22 @@ void RunZooClock(Zoo* z)
 		{
 			it->Grow(z->opTicks);
 			hungryMsg h = (hungryMsg)it->CheckHungry();
+			string strName = it->name;
+			string strMsg;
 			switch (h)
 			{
 			case HUNGRY:
-	
+				strMsg = strName + " is hungry!";
 				break;
 			case HUNGRYWARNING:
-
+				strMsg = strName + " is very hungry! Please feed him/her ASAP!";
 				break;
 			case HUNGRYDIE:
-
-				break;
-					
+				strMsg = strName + " died of hunger!";
+				it->Die();
+				break;	
 			}
+            z->zooMsg_que.push(strMsg);
 			bool bBreed = it->CheckBreed();
 			if (bBreed)
 				it->Breed();
@@ -106,6 +109,11 @@ mateMsg Zoo::MateAsianElephant(const string maleName, const string femaleName)
 	}
 	else
 		return NOTPREGNANT;
+}
+
+string Zoo::PopMsg()
+{
+	return zooMsg_que.pop();
 }
 
 void Zoo::CreateZooClock()

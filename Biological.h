@@ -8,6 +8,7 @@ class Biological
 {
 	friend class ArchiveFile;
 	friend class Zoo;
+	friend void RunZooClock(Zoo* z);
 public:
 	Biological();
 	Biological(Uint Id, string Name, Uint BirthTicks);

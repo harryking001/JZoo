@@ -106,6 +106,10 @@ bool ParseCmd(const string& str, Zoo& jz)
 		cout << "<Save game>               Save the game" << endl;
 		cout << "<Quit game>               Quit the game" << endl;
 	}
+	else if (str == "News")
+	{
+
+	}
 	else
 	{
 		cout << "Wrong command, please input again!" << endl;

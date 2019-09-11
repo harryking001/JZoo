@@ -9,6 +9,7 @@ class Asian_Elephant :
 {
 	friend class ArchiveFile;
 	friend class Zoo;
+	friend void RunZooClock(Zoo* z);
 public:
 	Asian_Elephant();
 	Asian_Elephant(Uint Id, string Name, Uint BirthTicks, gender Gd);
