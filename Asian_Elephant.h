@@ -9,7 +9,6 @@ class Asian_Elephant :
 {
 	friend class ArchiveFile;
 	friend class Zoo;
-	friend void RunZooClock(Zoo* z);
 public:
 	Asian_Elephant();
 	Asian_Elephant(Uint Id, string Name, Uint BirthTicks, gender Gd);
@@ -22,14 +21,9 @@ public:
 	void Excrete();
 	bool Mate(Asian_Elephant*);
 	void Grow(Uint Ticks);
-	virtual int CheckHungry() const;
-	virtual bool CheckBreed() const;
+
 private:
 	const Uint MATEAGETICK = 100000;
 	const Uint MATEINTERTICK = 5000;
-	const Uint HUNGRYGTICKS = 3000;
-	const Uint HUNGRYWARNINGTICKS = 5000;
-	const Uint HUNGRYDIETICKS = 6000;
-	const Uint PREGTICKS = 10000;
 };
 

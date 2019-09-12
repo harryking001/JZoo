@@ -46,7 +46,7 @@ bool ParseCmd(const string& str, Zoo& jz)
 		getline(cin, strMaleName);
 		cout << "Please input the name of the female elephant!" << endl;
 		getline(cin, strFemaleName);
-		mateMsg mateMsg = jz.MateAsianElephant (strMaleName, strFemaleName);
+		MATEMSG mateMsg = jz.MateAsianElephant (strMaleName, strFemaleName);
 		switch(mateMsg)
 		{
 		case PREGNANT:
@@ -71,10 +71,10 @@ bool ParseCmd(const string& str, Zoo& jz)
 			cout << "Wrong sex!" << endl;
 			break;
 		case MISSING_MALE:
-			cout << strMaleName + " is not our child!" << endl;
+			cout << strMaleName + "is not our child!" << endl;
 			break;
 		case MISSING_FEMALE:
-			cout << strFemaleName + " is not our child!" << endl;
+			cout << strFemaleName + "is not our child!" << endl;
 			break;
 		}
 	}
@@ -101,14 +101,10 @@ bool ParseCmd(const string& str, Zoo& jz)
 	else if (str == "Help")
 	{
 		cout << "Command description:" << endl;
-		cout << "<Buy an Asian elephant>   Buy an Asian elephant" << endl;
-		cout << "<Show me the status>      Show the zoo status" << endl;
-		cout << "<Save game>               Save the game" << endl;
-		cout << "<Quit game>               Quit the game" << endl;
-	}
-	else if (str == "News")
-	{
-
+		cout << "<Buy an Asian elephant> Buy an Asian elephant" << endl;
+		cout << "<Show me the status>    Show the zoo status" << endl;
+		cout << "<Save game>             Save the game" << endl;
+		cout << "<Quit game>             Quit the game" << endl;
 	}
 	else
 	{

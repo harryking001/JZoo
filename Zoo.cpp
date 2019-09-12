@@ -8,26 +8,6 @@ void RunZooClock(Zoo* z)
 		for (vector<Asian_Elephant>::iterator it = z->asEle_vec.begin(); it != z->asEle_vec.end(); it++)
 		{
 			it->Grow(z->opTicks);
-			hungryMsg h = (hungryMsg)it->CheckHungry();
-			string strName = it->name;
-			string strMsg;
-			switch (h)
-			{
-			case HUNGRY:
-				strMsg = strName + " is hungry!";
-				break;
-			case HUNGRYWARNING:
-				strMsg = strName + " is very hungry! Please feed him/her ASAP!";
-				break;
-			case HUNGRYDIE:
-				strMsg = strName + " died of hunger!";
-				it->Die();
-				break;	
-			}
-            z->zooMsg_que.push(strMsg);
-			bool bBreed = it->CheckBreed();
-			if (bBreed)
-				it->Breed();
 		}
 		Sleep(1000);
 	}
@@ -73,7 +53,7 @@ Asian_Elephant * Zoo::Find(const string name)
 	return NULL;
 }
 
-mateMsg Zoo::MateAsianElephant(const string maleName, const string femaleName)
+MATEMSG Zoo::MateAsianElephant(const string maleName, const string femaleName)
 {
 	Asian_Elephant* maleAse = Find(maleName);
 	Asian_Elephant* femaleAse = Find(femaleName);
@@ -88,9 +68,8 @@ mateMsg Zoo::MateAsianElephant(const string maleName, const string femaleName)
 		    return FEMALE_UNDERMATEAGE;
 		else if(maleAse->mateTicks < maleAse->MATEINTERTICK)
 		    return MALE_NOTREADY;
-		else if(femaleAse->mateTicks < femaleAse->MATEINTERTICK || femaleAse->preg == true)
+		else if(femaleAse->mateTicks < femaleAse->MATEINTERTICK)
 			return FEMALE_NOTREADY;
-
 	}
 	else if(!maleAse)
 	{
@@ -103,17 +82,12 @@ mateMsg Zoo::MateAsianElephant(const string maleName, const string femaleName)
 	bool bPreg = maleAse->Mate(femaleAse);
 	if(bPreg)
 	{
-		femaleAse->pregTicks = 0;
-		femaleAse->preg = true;
+		maleAse->pregTicks = 0;
+		maleAse->preg = true;
 		return PREGNANT;
 	}
 	else
 		return NOTPREGNANT;
-}
-
-string Zoo::PopMsg()
-{
-	return zooMsg_que.pop();
 }
 
 void Zoo::CreateZooClock()
