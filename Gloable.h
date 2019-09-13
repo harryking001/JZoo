@@ -22,7 +22,7 @@ enum mateMsg
 	SEX_WRONG,
 	MISSING_MALE,
 	MISSING_FEMALE,
-	
+	INBREED,
 };
 
 enum hungryMsg

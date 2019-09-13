@@ -56,6 +56,7 @@ private:
 	ULLong funds;
 	Uint opTicks;
 	vector<Asian_Elephant> asEle_vec;
+	queue<Asian_Elephant> aseFetus_que;
 	queue<string> zooMsg_que;
 };
 

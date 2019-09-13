@@ -8,6 +8,26 @@ void RunZooClock(Zoo* z)
 		for (vector<Asian_Elephant>::iterator it = z->asEle_vec.begin(); it != z->asEle_vec.end(); it++)
 		{
 			it->Grow(z->opTicks);
+			hungryMsg h = (hungryMsg)it->CheckHungry();
+			string strName = it->name;
+			string strMsg;
+			switch (h)
+			{
+			case HUNGRY:
+				strMsg = strName + " is hungry!";
+				break;
+			case HUNGRYWARNING:
+				strMsg = strName + " is very hungry! Please feed him/her ASAP!";
+				break;
+			case HUNGRYDIE:
+				strMsg = strName + " died of hunger!";
+				it->Die();
+				break;	
+			}
+            z->zooMsg_que.push(strMsg);
+			bool bBreed = it->CheckBreed();
+			if (bBreed)
+				it->Breed();
 		}
 		Sleep(1000);
 	}
@@ -53,11 +73,11 @@ Asian_Elephant * Zoo::Find(const string name)
 	return NULL;
 }
 
-MATEMSG Zoo::MateAsianElephant(const string maleName, const string femaleName)
+mateMsg Zoo::MateAsianElephant(const string maleName, const string femaleName)
 {
 	Asian_Elephant* maleAse = Find(maleName);
 	Asian_Elephant* femaleAse = Find(femaleName);
-	if(femaleAse && femaleAse)
+	if(maleAse && femaleAse)
 	{
         //Zoo需要访问Animal的name属性以及Asian_Elephant的MATEAGETICK及MATEINTERTICK属性
 		if(maleAse->gd!=MALE || femaleAse->gd!=FEMALE)
@@ -68,8 +88,9 @@ MATEMSG Zoo::MateAsianElephant(const string maleName, const string femaleName)
 		    return FEMALE_UNDERMATEAGE;
 		else if(maleAse->mateTicks < maleAse->MATEINTERTICK)
 		    return MALE_NOTREADY;
-		else if(femaleAse->mateTicks < femaleAse->MATEINTERTICK)
+		else if(femaleAse->mateTicks < femaleAse->MATEINTERTICK || femaleAse->preg == true)
 			return FEMALE_NOTREADY;
+
 	}
 	else if(!maleAse)
 	{
@@ -82,12 +103,19 @@ MATEMSG Zoo::MateAsianElephant(const string maleName, const string femaleName)
 	bool bPreg = maleAse->Mate(femaleAse);
 	if(bPreg)
 	{
-		maleAse->pregTicks = 0;
-		maleAse->preg = true;
+		femaleAse->pregTicks = 0;
+		femaleAse->preg = true;
 		return PREGNANT;
 	}
 	else
 		return NOTPREGNANT;
+}
+
+string Zoo::PopMsg()
+{
+	string strMsg = zooMsg_que.front();
+	zooMsg_que.pop();
+	return strMsg;
 }
 
 void Zoo::CreateZooClock()
