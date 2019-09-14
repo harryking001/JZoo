@@ -13,6 +13,30 @@ using std::string;
 Zoo jZoo;
 ArchiveFile archFile;
 
+void GetNews(Zoo& jz)
+{
+	string strMsg;
+	while (jz.zooMsg_que.empty() != true)
+	{
+		strMsg = jz.PopMsg();
+		if (strMsg.find(" is having baby..."))
+		{
+			cout << strMsg << endl;
+			gender gd = (gender)::IsHappened(GENDER_PROB);
+			if (gd == MALE)
+			{
+				cout << "It's a boy! What name do you want to give him?" << endl;
+			}
+			else if (gd == FEMALE)
+			{
+				cout << "It's a girl! What name do you want to give her?" << endl;
+			}
+			string strName;
+			getline(cin, strName);
+		}
+	}
+}
+
 bool ParseCmd(const string& str, Zoo& jz)
 {
 	if (str == "Buy an Asian elephant")
@@ -33,7 +57,7 @@ bool ParseCmd(const string& str, Zoo& jz)
 		else if(gd == FEMALE)
 			cout << "What name do you want to give her?" << endl;
 		getline(cin, strTmp);
-		Asian_Elephant ase(jz.IncAnimalNum(), strTmp, jz.GetTicks(), gd);
+		Asian_Elephant ase(jz.IncAnimalNum(), strTmp, jz.GetTicks(), "Unknow", "Unknow", gd);
 		jz.PushAse(ase);
 		jz.UpdateSpeciesNum();
 		cout << "You have bought an Asian elephant, cost $50000!" << endl;
@@ -50,10 +74,14 @@ bool ParseCmd(const string& str, Zoo& jz)
 		switch(mateMsg)
 		{
 		case PREGNANT:
+		{
 			cout << "Congratulations! "+ strFemaleName + " is pregnant!" << endl;
+			Asian_Elephant fetAse(0, "Unknow", 0, strMaleName, strFemaleName, UNKNOWGD);
+			jz.PushFetAse(fetAse);
 			break;
+		}
 		case NOTPREGNANT:
-			cout << strFemaleName + " and " + strMaleName + " had a good time!" << endl;
+			cout << strFemaleName + " and " + strMaleName + " had a good time ^_^" << endl;
 			break;
 		case MALE_UNDERMATEAGE:
 			cout << strMaleName + " is under mating age!" << endl;
@@ -69,6 +97,9 @@ bool ParseCmd(const string& str, Zoo& jz)
 			break;
 		case SEX_WRONG:
 			cout << "Wrong sex!" << endl;
+			break;
+		case INBREED:
+			cout << "Inbreeding!" << endl;
 			break;
 		case MISSING_MALE:
 			cout << strMaleName + " is not our child!" << endl;

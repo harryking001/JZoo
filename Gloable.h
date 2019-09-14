@@ -8,7 +8,8 @@
 enum gender
 {
 	MALE,
-	FEMALE
+	FEMALE,
+	UNKNOWGD
 };
 
 enum mateMsg

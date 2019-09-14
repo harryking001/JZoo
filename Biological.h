@@ -16,6 +16,7 @@ public:
 	virtual void Die();
 	virtual Biological* Breed() = 0;
 	virtual void Grow(Uint Ticks);
+	inline string GetName() const { return name; }
 protected:
 	Uint id;
 	string name;

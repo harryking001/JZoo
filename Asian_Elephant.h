@@ -11,9 +11,9 @@ class Asian_Elephant :
 	friend class Zoo;
 public:
 	Asian_Elephant();
-	Asian_Elephant(Uint Id, string Name, Uint BirthTicks, gender Gd);
-	Asian_Elephant(Uint Id, string Name, string BirthPlace, Uint BirthTicks, Uint AgeTicks, Uint Price, 
-		bool Live, Uint Weight, Uint Height, Uint Width, Uint Length, gender Gd, Uint HungryTicks, Uint PregTicks, Uint MateTicks, bool Preg);
+	Asian_Elephant(Uint Id, string Name, Uint BirthTicks, string Father, string Mother, gender Gd);
+	Asian_Elephant(Uint Id, string Name, string BirthPlace, Uint BirthTicks, Uint AgeTicks, Uint Price, bool Live, string Father, string Mother,
+		 Uint Weight, Uint Height, Uint Width, Uint Length, gender Gd, Uint HungryTicks, Uint PregTicks, Uint MateTicks, bool Preg);
 	virtual ~Asian_Elephant();
 	virtual Asian_Elephant* Breed();
 	void Eat(Biological&);

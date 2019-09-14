@@ -9,25 +9,31 @@ void RunZooClock(Zoo* z)
 		{
 			it->Grow(z->opTicks);
 			hungryMsg h = (hungryMsg)it->CheckHungry();
-			string strName = it->name;
+			string strName = "Asian elephant " + it->GetName();
 			string strMsg;
 			switch (h)
 			{
 			case HUNGRY:
 				strMsg = strName + " is hungry!";
+				z->zooMsg_que.push(strMsg);
 				break;
 			case HUNGRYWARNING:
 				strMsg = strName + " is very hungry! Please feed him/her ASAP!";
+				z->zooMsg_que.push(strMsg);
 				break;
 			case HUNGRYDIE:
 				strMsg = strName + " died of hunger!";
+				z->zooMsg_que.push(strMsg);
 				it->Die();
 				break;	
 			}
-            z->zooMsg_que.push(strMsg);
+            
 			bool bBreed = it->CheckBreed();
 			if (bBreed)
-				it->Breed();
+			{
+				strMsg = strName + " is having baby...";
+				z->zooMsg_que.push(strMsg);
+			}	
 		}
 		Sleep(1000);
 	}
@@ -80,17 +86,19 @@ mateMsg Zoo::MateAsianElephant(const string maleName, const string femaleName)
 	if(maleAse && femaleAse)
 	{
         //Zoo需要访问Animal的name属性以及Asian_Elephant的MATEAGETICK及MATEINTERTICK属性
-		if(maleAse->gd!=MALE || femaleAse->gd!=FEMALE)
+		if (maleAse->gd != MALE || femaleAse->gd != FEMALE)
 			return SEX_WRONG;
-		else if(maleAse->ageTicks < maleAse->MATEAGETICK)
+		else if (maleAse->ageTicks < maleAse->MATEAGETICK)
 			return MALE_UNDERMATEAGE;
-		else if(femaleAse->ageTicks < femaleAse->MATEAGETICK)
-		    return FEMALE_UNDERMATEAGE;
-		else if(maleAse->mateTicks < maleAse->MATEINTERTICK)
-		    return MALE_NOTREADY;
-		else if(femaleAse->mateTicks < femaleAse->MATEINTERTICK || femaleAse->preg == true)
+		else if (femaleAse->ageTicks < femaleAse->MATEAGETICK)
+			return FEMALE_UNDERMATEAGE;
+		else if (maleAse->mateTicks < maleAse->MATEINTERTICK)
+			return MALE_NOTREADY;
+		else if (femaleAse->mateTicks < femaleAse->MATEINTERTICK || femaleAse->preg == true)
 			return FEMALE_NOTREADY;
-
+		else if (femaleAse->father == maleAse->name || maleAse->mother == femaleAse->name ||
+			maleAse->father == femaleAse->father || maleAse->mother == femaleAse->mother)
+			return INBREED;
 	}
 	else if(!maleAse)
 	{

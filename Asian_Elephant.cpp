@@ -5,7 +5,7 @@ Asian_Elephant::Asian_Elephant()
 {
 }
 
-Asian_Elephant::Asian_Elephant(Uint Id, string Name, Uint BirthTicks, gender Gd) : Elephant(Id, Name, BirthTicks, Gd)
+Asian_Elephant::Asian_Elephant(Uint Id, string Name, Uint BirthTicks, string Father, string Mother, gender Gd) : Elephant(Id, Name, BirthTicks, Father, Mother, Gd)
 {
 	weight = 1000;
 	height = 1500;
@@ -14,9 +14,9 @@ Asian_Elephant::Asian_Elephant(Uint Id, string Name, Uint BirthTicks, gender Gd)
 	price = BABY_ASE_PRICE;
 }
 
-Asian_Elephant::Asian_Elephant(Uint Id, string Name, string BirthPlace, Uint BirthTicks, Uint AgeTicks, Uint Price, 
-	bool Live, Uint Weight, Uint Height, Uint Width, Uint Length, gender Gd, Uint HungryTicks, Uint PregTicks, Uint MateTicks, bool Preg)
-: Elephant(Id, Name, BirthPlace, BirthTicks, AgeTicks, Price, Live, Weight, Height, Width, Length, Gd, HungryTicks, PregTicks, MateTicks, Preg)
+Asian_Elephant::Asian_Elephant(Uint Id, string Name, string BirthPlace, Uint BirthTicks, Uint AgeTicks, Uint Price, bool Live, string Father, string Mother,
+	 Uint Weight, Uint Height, Uint Width, Uint Length, gender Gd, Uint HungryTicks, Uint PregTicks, Uint MateTicks, bool Preg)
+: Elephant(Id, Name, BirthPlace, BirthTicks, AgeTicks, Price, Live, Father, Mother, Weight, Height, Width, Length, Gd, HungryTicks, PregTicks, MateTicks, Preg)
 {
 }
 

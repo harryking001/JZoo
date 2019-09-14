@@ -27,10 +27,18 @@ public:
 	{
 		 return ++animalNum;
 	}
+	inline Uint DecAnimalNum()
+	{
+		return --animalNum;
+	}
 	void UpdateSpeciesNum();
 	inline Uint GetTicks() const
 	{
 		return opTicks;
+	}
+	inline void IncMoney(Uint money)
+	{
+		int balance = funds + money;
 	}
 	inline bool DecMoney(Uint money)
 	{
@@ -42,9 +50,26 @@ public:
 		asEle_vec.push_back(ase);
 		IncAnimalNum();
 	}
+	inline void PopAse()
+	{
+		asEle_vec.pop_back();
+		DecAnimalNum();
+	}
+	inline bool PushFetAse(Asian_Elephant fetAse)
+	{
+		aseFetus_que.push(fetAse);
+		return true;
+	}
+	inline Asian_Elephant PopFetAse()
+	{
+		Asian_Elephant ase = aseFetus_que.front();
+		aseFetus_que.pop();
+		return ase;
+	}
 	Asian_Elephant* Find(const string name);
 	mateMsg MateAsianElephant(const string maleName, const string femaleName);
 	string PopMsg();
+	
 private:
 	void CreateZooClock();
 private:
