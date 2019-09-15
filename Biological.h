@@ -16,7 +16,11 @@ public:
 	virtual void Die();
 	virtual Biological* Breed() = 0;
 	virtual void Grow(Uint Ticks);
+	inline void SetId(Uint Id) { id = Id; }
+	inline void Naming(string Name) { name = Name; }
 	inline string GetName() const { return name; }
+	inline void SetBirthTicks(Uint Ticks) { birthTicks = Ticks; }
+	inline Uint GetBirthTicks() { return birthTicks; }
 protected:
 	Uint id;
 	string name;

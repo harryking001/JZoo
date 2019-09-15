@@ -69,7 +69,10 @@ public:
 	Asian_Elephant* Find(const string name);
 	mateMsg MateAsianElephant(const string maleName, const string femaleName);
 	string PopMsg();
-	
+	inline bool IsMsgEmpty() const
+	{
+		return zooMsg_que.empty();
+	}
 private:
 	void CreateZooClock();
 private:

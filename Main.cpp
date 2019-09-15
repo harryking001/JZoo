@@ -16,12 +16,12 @@ ArchiveFile archFile;
 void GetNews(Zoo& jz)
 {
 	string strMsg;
-	while (jz.zooMsg_que.empty() != true)
+	while (jz.IsMsgEmpty() != true)
 	{
 		strMsg = jz.PopMsg();
+        cout << strMsg << endl;
 		if (strMsg.find(" is having baby..."))
 		{
-			cout << strMsg << endl;
 			gender gd = (gender)::IsHappened(GENDER_PROB);
 			if (gd == MALE)
 			{
@@ -33,6 +33,13 @@ void GetNews(Zoo& jz)
 			}
 			string strName;
 			getline(cin, strName);
+			Asian_Elephant ase = jz.PopFetAse();
+			ase.Naming(strName);
+			Uint birthTicks = jz.GetTicks();
+			ase.SetBirthTicks(birthTicks);
+			Uint id = jz.IncAnimalNum();
+			ase.SetId(id);
+			jz.PushAse(ase);
 		}
 	}
 }
@@ -137,14 +144,11 @@ bool ParseCmd(const string& str, Zoo& jz)
 		cout << "<Save game>               Save the game" << endl;
 		cout << "<Quit game>               Quit the game" << endl;
 	}
-	else if (str == "News")
-	{
-
-	}
 	else
 	{
 		cout << "Wrong command, please input again!" << endl;
 	}
+	GetNews(jz);
 	return false;
 }
 
