@@ -23,6 +23,10 @@ public:
 	{
 		managerName = strManager;
 	}
+	inline Uint Feed(Animal& ani)
+	{
+		return ani.Eat();
+	}
 	inline Uint IncAnimalNum()
 	{
 		 return ++animalNum;

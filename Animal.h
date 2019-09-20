@@ -15,7 +15,7 @@ public:
 	virtual ~Animal();
 	virtual void Die();
 	virtual void Eat(Biological&) = 0;
-	virtual void Eat() = 0;
+	virtual Uint Eat() = 0;
 	virtual void Excrete() = 0;
 	//virtual bool Mate(Animal&) = 0;
 	virtual int CheckHungry() const = 0;

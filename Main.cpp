@@ -48,8 +48,6 @@ bool ParseCmd(const string& str, Zoo& jz)
 {
 	if (str == "Buy an Asian elephant")
 	{
-		string strTmp;
-		gender gd;
 		if (!jz.DecMoney(BABY_ASE_PRICE))
 		{
 			cout << "I'm afraid you don't have enough money!" << endl;
@@ -57,14 +55,17 @@ bool ParseCmd(const string& str, Zoo& jz)
 		}
 
 		cout << "What gender do you want?" << endl;
-		getline(cin, strTmp);
-		gd = strTmp == "Male" ? MALE : FEMALE;
+		string strGd;
+		gender gd;
+		getline(cin, strGd);
+		gd = strGd == "Male" ? MALE : FEMALE;
 		if(gd == MALE)
 		    cout << "What name do you want to give him?" << endl;
 		else if(gd == FEMALE)
 			cout << "What name do you want to give her?" << endl;
-		getline(cin, strTmp);
-		Asian_Elephant ase(jz.IncAnimalNum(), strTmp, jz.GetTicks(), "Unknow", "Unknow", gd);
+		string strName;
+		getline(cin, strName);
+		Asian_Elephant ase(jz.IncAnimalNum(), strName, jz.GetTicks(), "Unknow", "Unknow", gd);
 		jz.PushAse(ase);
 		jz.UpdateSpeciesNum();
 		cout << "You have bought an Asian elephant, cost $50000!" << endl;
@@ -114,6 +115,22 @@ bool ParseCmd(const string& str, Zoo& jz)
 		case MISSING_FEMALE:
 			cout << strFemaleName + " is not our child!" << endl;
 			break;
+		}
+	}
+	else if (str == "Feed Asian elephant")
+	{
+		string strName;
+		cout << "Please input the name of the elephant you want to feed!" << endl;
+		getline(cin, strName);
+		Asian_Elephant* pAse = jz.Find(strName);
+		if (jz.DecMoney(ASE_FOOD_COST))
+		{
+            jz.Feed(*pAse);
+			cout << strName + " is full and happy^_^" << endl;
+		}
+		else
+		{
+			cout << "You don't have enough money!" << endl;
 		}
 	}
 	else if (str == "Show me the status")

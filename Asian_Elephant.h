@@ -17,7 +17,7 @@ public:
 	virtual ~Asian_Elephant();
 	virtual Asian_Elephant* Breed();
 	void Eat(Biological&);
-	void Eat();
+	Uint Eat();
 	void Excrete();
 	bool Mate(Asian_Elephant*);
 	void Grow(Uint Ticks);
@@ -30,5 +30,6 @@ private:
 	static const Uint HUNGRYWARNINGTICKS = 5000;
 	static const Uint HUNGRYDIETICKS = 6000;
 	static const Uint PREGTICKS = 10000;
+
 };
 

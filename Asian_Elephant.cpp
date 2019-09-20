@@ -36,11 +36,13 @@ Asian_Elephant * Asian_Elephant::Breed()
 
 void Asian_Elephant::Eat(Biological &)
 {
+	hungryTicks = 0;
 }
 
-void Asian_Elephant::Eat()
+Uint Asian_Elephant::Eat()
 {
 	hungryTicks = 0;
+	return ASE_FOOD_COST;
 }
 
 void Asian_Elephant::Excrete()
