@@ -96,8 +96,9 @@ mateMsg Zoo::MateAsianElephant(const string maleName, const string femaleName)
 			return MALE_NOTREADY;
 		else if (femaleAse->mateTicks < femaleAse->MATEINTERTICK || femaleAse->preg == true)
 			return FEMALE_NOTREADY;
-		else if (femaleAse->father == maleAse->name || maleAse->mother == femaleAse->name ||
-			maleAse->father == femaleAse->father || maleAse->mother == femaleAse->mother)
+		else if ((femaleAse->father == maleAse->name || maleAse->mother == femaleAse->name ||
+			maleAse->father == femaleAse->father || maleAse->mother == femaleAse->mother) && 
+			(femaleAse->father != "Unknow") && (femaleAse->mother != "Unknow") && (maleAse->father != "Unknow") && (maleAse->mother != "Unknow"))
 			return INBREED;
 	}
 	else if(!maleAse)

@@ -6,7 +6,8 @@ Animal::Animal()
 {
 }
 
-Animal::Animal(Uint Id, string Name, Uint BirthTicks, string Father, string Mother, gender Gd) :Biological(Id, Name, BirthTicks, Father, Mother), gd(Gd), preg(false)
+Animal::Animal(Uint Id, string Name, Uint BirthTicks, string Father, string Mother, gender Gd) :Biological(Id, Name, BirthTicks, Father, Mother), 
+gd(Gd), hungryTicks(0), pregTicks(0), mateTicks(0), preg(false)
 { 
 }
 

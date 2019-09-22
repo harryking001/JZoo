@@ -72,14 +72,21 @@ bool ArchiveFile::Load(Zoo& z)
 			vector<Uint> unIDVec;
 			vector<string> sNameVec;
 			vector<string> sBirthPlaceVec;
-			vector<Uint> unTicksVec;
-			vector<Uint> unBirthTickVec;
+			vector<Uint> unBirthTicksVec;
+			vector<Uint> unAgeTicksVec;
 			vector<Uint> unPriceVec;
+			vector<bool> bLiveVec;
+			vector<string> strFatherVec;
+			vector<string> strMotherVec;
 			vector<Uint> unWgtVec;
 			vector<Uint> unHgtVec;
 			vector<Uint> unWidVec;
 			vector<Uint> unLenVec;
 			vector <gender> gendVec;
+			vector<Uint> unHungryTicksVec;
+			vector<Uint> unPregTicksVec;
+			vector<Uint> unMateTicksVec;
+			vector<bool> bPregVec;
 
 			while (infile >> strKey >> strValue)
 			{
@@ -104,20 +111,33 @@ bool ArchiveFile::Load(Zoo& z)
 					sBirthPlaceVec = SplitString(strValue, ",");
 
 				}
-				else if (strKey == "Ticks")
-				{
-					vector<string> sTicksVec = SplitString(strValue, ",");
-					unTicksVec = CvtStoUnVec(sTicksVec);
-				}
 				else if (strKey == "BirthTicks")
 				{
-					vector<string> sBirthTickVec = SplitString(strValue, ",");
-					unBirthTickVec = CvtStoUnVec(sBirthTickVec);
+					vector<string> sBirthTicksVec = SplitString(strValue, ",");
+					unBirthTicksVec = CvtStoUnVec(sBirthTicksVec);
+				}
+				else if (strKey == "AgeTicks")
+				{
+					vector<string> sAgeTicksVec = SplitString(strValue, ",");
+					unAgeTicksVec = CvtStoUnVec(sAgeTicksVec);
 				}
 				else if (strKey == "Price")
 				{
 					vector<string> sPriceVec = SplitString(strValue, ",");
 					unPriceVec = CvtStoUnVec(sPriceVec);
+				}
+				else if (strKey == "Live")
+				{
+					vector<string> sLiveVec = SplitString(strValue, ",");
+					bLiveVec = CvtStoBoolVec(sLiveVec);
+				}
+				else if (strKey == "Father")
+				{
+					strFatherVec = SplitString(strValue, ",");
+				}
+				else if (strKey == "Mother")
+				{
+					strMotherVec = SplitString(strValue, ",");
 				}
 				else if (strKey == "Weight")
 				{
@@ -152,11 +172,32 @@ bool ArchiveFile::Load(Zoo& z)
 						gendVec.push_back(gend);
 					}
 				}
+				else if (strKey == "HungryTicks")
+				{
+					vector<string> sHungryTicksVec = SplitString(strValue, ",");
+					unHungryTicksVec = CvtStoUnVec(sHungryTicksVec);
+				}
+				else if (strKey == "PregTicks")
+				{
+					vector<string> sPregTicksVec = SplitString(strValue, ",");
+					unPregTicksVec = CvtStoUnVec(sPregTicksVec);
+				}
+				else if (strKey == "MateTicks")
+				{
+					vector<string> sMateTicksVec = SplitString(strValue, ",");
+					unMateTicksVec = CvtStoUnVec(sMateTicksVec);
+				}
+				else if (strKey == "Pregnant")
+				{
+					vector<string> sPregVec = SplitString(strValue, ",");
+					bPregVec = CvtStoBoolVec(sPregVec);
+				}
 			}
 			z.asEle_vec.clear();
 			for (int i = 0; i < unQty; i++)
 			{
-				Asian_Elephant asEle(unIDVec[i], sNameVec[i], sBirthPlaceVec[i], unTicksVec[i], unBirthTickVec[i], unPriceVec[i], unWgtVec[i], unHgtVec[i], unWidVec[i], unLenVec[i], gendVec[i]);
+				Asian_Elephant asEle(unIDVec[i], sNameVec[i], sBirthPlaceVec[i], unBirthTicksVec[i], unAgeTicksVec[i], unPriceVec[i], bLiveVec[i], strFatherVec[i], strMotherVec[i], 
+					unWgtVec[i], unHgtVec[i], unWidVec[i], unLenVec[i], gendVec[i], unHungryTicksVec[i], unPregTicksVec[i], unMateTicksVec[i], bPregVec[i]);
 				z.asEle_vec.push_back(asEle);
 			}
 		}
@@ -202,19 +243,19 @@ bool ArchiveFile::Save(const Zoo& z)
 	}
 	outfile << z.asEle_vec[i].birthPlace << endl;
 
-	outfile << "Ticks ";
-	for (i = 0; i < nQty - 1; i++)
-	{
-		outfile << z.asEle_vec[i].ticks  << ",";
-	}
-	outfile << z.asEle_vec[i].ticks << endl;
-
 	outfile << "BirthTicks ";
 	for (i = 0; i < nQty - 1; i++)
 	{
-		outfile << z.asEle_vec[i].birthTicks << ",";
+		outfile << z.asEle_vec[i].birthTicks  << ",";
 	}
 	outfile << z.asEle_vec[i].birthTicks << endl;
+
+	outfile << "AgeTicks ";
+	for (i = 0; i < nQty - 1; i++)
+	{
+		outfile << z.asEle_vec[i].ageTicks << ",";
+	}
+	outfile << z.asEle_vec[i].ageTicks << endl;
 
 	outfile << "Price ";
 	for (i = 0; i < nQty - 1; i++)
@@ -223,12 +264,26 @@ bool ArchiveFile::Save(const Zoo& z)
 	}
 	outfile << z.asEle_vec[i].price << endl;
 
-	outfile << "Weight ";
+	outfile << "Live ";
 	for (i = 0; i < nQty - 1; i++)
 	{
-		outfile << z.asEle_vec[i].weight << ",";
+		outfile << z.asEle_vec[i].live << ",";
 	}
-	outfile << z.asEle_vec[i].weight << endl;
+	outfile << z.asEle_vec[i].live << endl;
+
+	outfile << "Father ";
+	for (i = 0; i < nQty - 1; i++)
+	{
+		outfile << z.asEle_vec[i].father << ",";
+	}
+	outfile << z.asEle_vec[i].father << endl;
+
+	outfile << "Mother ";
+	for (i = 0; i < nQty - 1; i++)
+	{
+		outfile << z.asEle_vec[i].mother << ",";
+	}
+	outfile << z.asEle_vec[i].mother << endl;
 
 	outfile << "Height ";
 	for (i = 0; i < nQty - 1; i++)
@@ -274,6 +329,34 @@ bool ArchiveFile::Save(const Zoo& z)
 		outfile << "Female" << endl;
 	}
 
+	outfile << "HungryTicks ";
+	for (i = 0; i < nQty - 1; i++)
+	{
+		outfile << z.asEle_vec[i].hungryTicks << ",";
+	}
+	outfile << z.asEle_vec[i].hungryTicks << endl;
+
+	outfile << "PregTicks ";
+	for (i = 0; i < nQty - 1; i++)
+	{
+		outfile << z.asEle_vec[i].pregTicks << ",";
+	}
+	outfile << z.asEle_vec[i].pregTicks << endl;
+
+	outfile << "MateTicks ";
+	for (i = 0; i < nQty - 1; i++)
+	{
+		outfile << z.asEle_vec[i].mateTicks << ",";
+	}
+	outfile << z.asEle_vec[i].mateTicks << endl;
+
+	outfile << "Pregnant ";
+	for (i = 0; i < nQty - 1; i++)
+	{
+		outfile << z.asEle_vec[i].preg << ",";
+	}
+	outfile << z.asEle_vec[i].preg << endl;
+
 	outfile << "</Asian_Elephant> NULL" << endl;
 	return true;
 }
@@ -304,4 +387,19 @@ vector<Uint> ArchiveFile::CvtStoUnVec(vector<string> sVec)
 		nVec.push_back(unTmp);
 	}
 	return nVec;
+}
+
+vector<bool> ArchiveFile::CvtStoBoolVec(vector<string> sVec)
+{
+	vector<bool> bVec;
+	bool bTmp;
+	for (vector<string>::iterator it = sVec.begin(); it != sVec.end(); it++)
+	{
+		if (*it == "true")
+			bTmp = true;
+		else
+			bTmp = false;
+		bVec.push_back(bTmp);
+	}
+	return bVec;
 }

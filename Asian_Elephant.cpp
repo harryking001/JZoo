@@ -66,6 +66,7 @@ bool Asian_Elephant::Mate(Asian_Elephant* ase)
 
 void Asian_Elephant::Grow(Uint Ticks)
 {
+	mateTicks++;
 	hungryTicks++;
 	if (preg)
 	{
@@ -80,19 +81,21 @@ void Asian_Elephant::Grow(Uint Ticks)
 
 int Asian_Elephant::CheckHungry() const
 {
-	if (hungryTicks > HUNGRYGTICKS)
+	if (hungryTicks == HUNGRYGTICKS)
 		return HUNGRY;
-	else if (hungryTicks > HUNGRYWARNINGTICKS)
+	else if (hungryTicks == HUNGRYWARNINGTICKS)
 		return HUNGRYWARNING;
-	else if (hungryTicks > HUNGRYDIETICKS)
+	else if (hungryTicks == HUNGRYDIETICKS)
 		return HUNGRYDIE;
-	else
+	else if (hungryTicks < HUNGRYGTICKS)
 		return NOTHUNGRY;
+	else
+		return NUL;
 }
 
 bool Asian_Elephant::CheckBreed() const
 {
-	return pregTicks > PREGTICKS ? true:false;
+	return pregTicks == PREGTICKS ? true:false;
 }
 
 

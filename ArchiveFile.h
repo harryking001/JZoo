@@ -28,5 +28,6 @@ private:
 	ofstream outfile;
 	vector<string> SplitString(string str1, string str2);
 	vector<Uint> CvtStoUnVec(vector<string>);
+	vector<bool> CvtStoBoolVec(vector<string> sVec);
 };
 

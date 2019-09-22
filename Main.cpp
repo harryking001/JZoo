@@ -3,6 +3,7 @@
 #include <string>
 #include "Zoo.h"
 #include "ArchiveFile.h"
+#include "Gloable.h"
 
 using std::cin;
 using std::cout;
@@ -20,7 +21,7 @@ void GetNews(Zoo& jz)
 	{
 		strMsg = jz.PopMsg();
         cout << strMsg << endl;
-		if (strMsg.find(" is having baby..."))
+		if (strMsg.find(" is having baby...")!=std::string::npos)
 		{
 			gender gd = (gender)::IsHappened(GENDER_PROB);
 			if (gd == MALE)
@@ -69,7 +70,7 @@ bool ParseCmd(const string& str, Zoo& jz)
 		jz.PushAse(ase);
 		jz.UpdateSpeciesNum();
 		cout << "You have bought an Asian elephant, cost $50000!" << endl;
-		cout << "Please enter the command or call Help!" << endl;
+
 	}
 	else if (str == "Mate Asian elephant")
 	{
@@ -116,6 +117,7 @@ bool ParseCmd(const string& str, Zoo& jz)
 			cout << strFemaleName + " is not our child!" << endl;
 			break;
 		}
+
 	}
 	else if (str == "Feed Asian elephant")
 	{
@@ -132,6 +134,7 @@ bool ParseCmd(const string& str, Zoo& jz)
 		{
 			cout << "You don't have enough money!" << endl;
 		}
+
 	}
 	else if (str == "Show me the status")
 	{
@@ -153,10 +156,16 @@ bool ParseCmd(const string& str, Zoo& jz)
 	{
 		return true;
 	}
+	else if (str == "News")
+	{
+	    GetNews(jz);
+    }
 	else if (str == "Help")
 	{
 		cout << "Command description:" << endl;
 		cout << "<Buy an Asian elephant>   Buy an Asian elephant" << endl;
+		cout << "<Mate Asian elephant>     Mate 2 Asian elephants" << endl;
+		cout << "<Feed Asian elephant>     Feed an Asian elephant" << endl;
 		cout << "<Show me the status>      Show the zoo status" << endl;
 		cout << "<Save game>               Save the game" << endl;
 		cout << "<Quit game>               Quit the game" << endl;
@@ -165,7 +174,7 @@ bool ParseCmd(const string& str, Zoo& jz)
 	{
 		cout << "Wrong command, please input again!" << endl;
 	}
-	GetNews(jz);
+
 	return false;
 }
 
@@ -204,6 +213,7 @@ int main()
 			cout << "  That's why I need a young man like you to help me run it." << endl;
 			cout << "  Here is $1000000 for the initial funding! Make my zoo wonderful!" << endl;
 			cout << "  See you! Good luck!" << endl;
+			cout << endl << "Please enter the commands!" << endl << "Enter 'Help' for commands information." << endl;
 			jZoo.HireManager(strName);
 			Console_Loop(jZoo);
 		}
