@@ -285,6 +285,13 @@ bool ArchiveFile::Save(const Zoo& z)
 	}
 	outfile << z.asEle_vec[i].mother << endl;
 
+	outfile << "Weight ";
+	for (i = 0; i < nQty - 1; i++)
+	{
+		outfile << z.asEle_vec[i].weight << ",";
+	}
+	outfile << z.asEle_vec[i].weight << endl;
+
 	outfile << "Height ";
 	for (i = 0; i < nQty - 1; i++)
 	{
@@ -395,7 +402,7 @@ vector<bool> ArchiveFile::CvtStoBoolVec(vector<string> sVec)
 	bool bTmp;
 	for (vector<string>::iterator it = sVec.begin(); it != sVec.end(); it++)
 	{
-		if (*it == "true")
+		if (*it == "1")
 			bTmp = true;
 		else
 			bTmp = false;

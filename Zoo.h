@@ -52,7 +52,6 @@ public:
 	inline void PushAse(Asian_Elephant& ase)
 	{
 		asEle_vec.push_back(ase);
-		IncAnimalNum();
 	}
 	inline void PopAse()
 	{
