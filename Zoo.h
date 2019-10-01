@@ -14,7 +14,7 @@ class Zoo
 	//friend bool ArchiveFile::Load(const Zoo& z) const;
 	//friend bool ArchiveFile::Save(Zoo& z) const;
 	friend class ArchiveFile;
-	friend void RunZooClock(Zoo* z);
+	friend void RunZooClock(Zoo& z);
 public:
 	Zoo();
 	~Zoo();

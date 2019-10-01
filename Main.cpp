@@ -1,9 +1,7 @@
 #include "stdafx.h"
 #include <iostream>
 #include <string>
-#include "Zoo.h"
 #include "ArchiveFile.h"
-#include "Gloable.h"
 
 using std::cin;
 using std::cout;
@@ -13,6 +11,9 @@ using std::string;
 
 Zoo jZoo;
 ArchiveFile archFile;
+bool bExit = false;
+std::mutex mtx;
+
 
 void GetNews(Zoo& jz)
 {
@@ -45,8 +46,19 @@ void GetNews(Zoo& jz)
 	}
 }
 
+void RunGetNews(Zoo& jz)
+{
+	while (!bExit)
+	{
+		GetNews(jz);
+		Sleep(200);
+	}
+
+}
+
 bool ParseCmd(const string& str, Zoo& jz)
 {
+	mtx.lock();
 	if (str == "Buy an Asian elephant")
 	{
 		if (!jz.DecMoney(BABY_ASE_PRICE))
@@ -174,14 +186,16 @@ bool ParseCmd(const string& str, Zoo& jz)
 	{
 		cout << "Wrong command, please input again!" << endl;
 	}
+	mtx.unlock();
 
 	return false;
 }
 
 void Console_Loop(Zoo& jz)
 {
-	bool bExit = false;
 	string strCmd;
+	std::thread thd(RunGetNews, std::ref(jz));
+	thd.detach();
 	while (!bExit)
 	{
 		std::getline(cin, strCmd);

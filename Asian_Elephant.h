@@ -24,12 +24,12 @@ public:
 	virtual int CheckHungry() const;
 	virtual bool CheckBreed() const;
 private:
-	static const Uint MATEAGETICK = 5000;
-	static const Uint MATEINTERTICK = 500;
-	static const Uint HUNGRYGTICKS = 2000;
-	static const Uint HUNGRYWARNINGTICKS = 4000;
+	static const Uint MATEAGETICK = 100;
+	static const Uint MATEINTERTICK = 50;
+	static const Uint HUNGRYGTICKS = 30;
+	static const Uint HUNGRYWARNINGTICKS = 100;
 	static const Uint HUNGRYDIETICKS = 6000;
-	static const Uint PREGTICKS = 5000;
+	static const Uint PREGTICKS = 200;
 
 };
 
