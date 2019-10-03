@@ -18,10 +18,11 @@ std::mutex mtx;
 void GetNews(Zoo& jz)
 {
 	string strMsg;
+	mtx.lock();
 	while (jz.IsMsgEmpty() != true)
 	{
 		strMsg = jz.PopMsg();
-        cout << strMsg << endl;
+                cout << endl << "News: " << strMsg << endl;
 		if (strMsg.find(" is having baby...")!=std::string::npos)
 		{
 			gender gd = (gender)::IsHappened(GENDER_PROB);
@@ -44,6 +45,7 @@ void GetNews(Zoo& jz)
 			jz.PushAse(ase);
 		}
 	}
+	mtx.unlock();
 }
 
 void RunGetNews(Zoo& jz)
@@ -58,15 +60,16 @@ void RunGetNews(Zoo& jz)
 
 bool ParseCmd(const string& str, Zoo& jz)
 {
-	mtx.lock();
 	if (str == "Buy an Asian elephant")
 	{
 		if (!jz.DecMoney(BABY_ASE_PRICE))
 		{
+			mtx.lock();
 			cout << "I'm afraid you don't have enough money!" << endl;
+			mtx.unlock();
 			return false;
 		}
-
+                mtx.lock();
 		cout << "What gender do you want?" << endl;
 		string strGd;
 		gender gd;
@@ -82,10 +85,12 @@ bool ParseCmd(const string& str, Zoo& jz)
 		jz.PushAse(ase);
 		jz.UpdateSpeciesNum();
 		cout << "You have bought an Asian elephant, cost $50000!" << endl;
+		mtx.unlock();
 
 	}
 	else if (str == "Mate Asian elephant")
 	{
+		mtx.lock();
 		string strMaleName,strFemaleName;
 		cout << "Please input the name of the male elephant!" << endl;
 		getline(cin, strMaleName);
@@ -129,10 +134,12 @@ bool ParseCmd(const string& str, Zoo& jz)
 			cout << strFemaleName + " is not our child!" << endl;
 			break;
 		}
+		mtx.unlock();
 
 	}
 	else if (str == "Feed Asian elephant")
 	{
+		mtx.lock();
 		string strName;
 		cout << "Please input the name of the elephant you want to feed!" << endl;
 		getline(cin, strName);
@@ -146,15 +153,17 @@ bool ParseCmd(const string& str, Zoo& jz)
 		{
 			cout << "You don't have enough money!" << endl;
 		}
-
+                mtx.unlock();
 	}
 	else if (str == "Show me the status")
 	{
-
+                mtx.lock();
 		cout << "Please enter the command or call Help!" << endl;
+		mtx.unlock();
 	}
 	else if (str == "Save game")
 	{
+		mtx.lock();
 		string strFile;
 		cout << "Please input the file name:" << endl;
 		getline(cin, strFile);
@@ -163,6 +172,7 @@ bool ParseCmd(const string& str, Zoo& jz)
 			cout << "Save successful!" << endl;
 		else
 			cout << "Save failed!" << endl;
+		mtx.unlock();
 	}
 	else if (str == "Quit game")
 	{
@@ -174,6 +184,7 @@ bool ParseCmd(const string& str, Zoo& jz)
     }
 	else if (str == "Help")
 	{
+		mtx.lock();
 		cout << "Command description:" << endl;
 		cout << "<Buy an Asian elephant>   Buy an Asian elephant" << endl;
 		cout << "<Mate Asian elephant>     Mate 2 Asian elephants" << endl;
@@ -181,12 +192,14 @@ bool ParseCmd(const string& str, Zoo& jz)
 		cout << "<Show me the status>      Show the zoo status" << endl;
 		cout << "<Save game>               Save the game" << endl;
 		cout << "<Quit game>               Quit the game" << endl;
+		mtx.unlock();
 	}
 	else
 	{
+		mtx.lock();
 		cout << "Wrong command, please input again!" << endl;
+		mtx.unlock();
 	}
-	mtx.unlock();
 
 	return false;
 }
