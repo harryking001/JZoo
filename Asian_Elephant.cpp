@@ -73,10 +73,10 @@ void Asian_Elephant::Grow(Uint Ticks)
 		pregTicks++;
 	}
 	ageTicks = Ticks - birthTicks;
-	weight = 1000 + ageTicks;
-	height = 1500 + ageTicks;
-	width = 800 + ageTicks;
-	length = 1600 + ageTicks;
+	weight = ageTicks < 5000 ? 1000 + ageTicks : 1000 + 5000;
+	height = ageTicks < 3000 ? 1500 + ageTicks : 1500 + 3000;
+	width = ageTicks < 2000 ? 800 + ageTicks : 800 + 2000;
+	length = ageTicks < 5000 ? 1600 + ageTicks : 1600 + 5000;
 }
 
 int Asian_Elephant::CheckHungry() const
