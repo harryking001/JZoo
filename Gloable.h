@@ -1,6 +1,7 @@
 #pragma once
 #include "time.h"
 #include <random>
+#include <mutex>
 
 #define Uint unsigned int
 #define ULLong unsigned long long
@@ -43,5 +44,6 @@ const int ERROR = -1;
 const int TRUE = 1;
 const int FALSE = 0;
 
+//std::mutex mtx;
 
 int IsHappened(double p);

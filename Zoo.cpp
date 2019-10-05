@@ -1,13 +1,16 @@
 #include "Zoo.h"
 
-void RunZooClock(Zoo* z)
+extern std::mutex mtx;
+
+void RunZooClock(Zoo& z)
 {
-	while (!z->close)
+	while (!z.close)
 	{
-		z->opTicks++;
-		for (vector<Asian_Elephant>::iterator it = z->asEle_vec.begin(); it != z->asEle_vec.end(); it++)
+		mtx.lock();
+		z.opTicks++;
+		for (vector<Asian_Elephant>::iterator it = z.asEle_vec.begin(); it != z.asEle_vec.end(); it++)
 		{
-			it->Grow(z->opTicks);
+			it->Grow(z.opTicks);
 			hungryMsg h = (hungryMsg)it->CheckHungry();
 			string strName = "Asian elephant " + it->GetName();
 			string strMsg;
@@ -15,15 +18,15 @@ void RunZooClock(Zoo* z)
 			{
 			case HUNGRY:
 				strMsg = strName + " is hungry!";
-				z->zooMsg_que.push(strMsg);
+				z.zooMsg_que.push(strMsg);
 				break;
 			case HUNGRYWARNING:
 				strMsg = strName + " is very hungry! Please feed him/her ASAP!";
-				z->zooMsg_que.push(strMsg);
+				z.zooMsg_que.push(strMsg);
 				break;
 			case HUNGRYDIE:
 				strMsg = strName + " died of hunger!";
-				z->zooMsg_que.push(strMsg);
+				z.zooMsg_que.push(strMsg);
 				it->Die();
 				break;	
 			}
@@ -32,9 +35,10 @@ void RunZooClock(Zoo* z)
 			if (bBreed)
 			{
 				strMsg = strName + " is having baby...";
-				z->zooMsg_que.push(strMsg);
+				z.zooMsg_que.push(strMsg);
 			}	
 		}
+		mtx.unlock();
 		Sleep(1000);
 	}
 }
@@ -129,7 +133,7 @@ string Zoo::PopMsg()
 
 void Zoo::CreateZooClock()
 {
-	std::thread t1(::RunZooClock,this);
+	std::thread t1(::RunZooClock, std::ref(*this));
 	t1.detach();
 }
 
