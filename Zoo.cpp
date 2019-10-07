@@ -1,12 +1,11 @@
 #include "Zoo.h"
 
-extern std::mutex mtx;
 
 void RunZooClock(Zoo& z)
 {
 	while (!z.close)
 	{
-		mtx.lock();
+		z.LockMtxClock();
 		z.opTicks++;
 		for (vector<Asian_Elephant>::iterator it = z.asEle_vec.begin(); it != z.asEle_vec.end(); it++)
 		{
@@ -18,15 +17,15 @@ void RunZooClock(Zoo& z)
 			{
 			case HUNGRY:
 				strMsg = strName + " is hungry!";
-				z.zooMsg_que.push(strMsg);
+				z.PushMsg(strMsg);
 				break;
 			case HUNGRYWARNING:
 				strMsg = strName + " is very hungry! Please feed him/her ASAP!";
-				z.zooMsg_que.push(strMsg);
+				z.PushMsg(strMsg);
 				break;
 			case HUNGRYDIE:
 				strMsg = strName + " died of hunger!";
-				z.zooMsg_que.push(strMsg);
+				z.PushMsg(strMsg);
 				it->Die();
 				break;	
 			}
@@ -35,10 +34,10 @@ void RunZooClock(Zoo& z)
 			if (bBreed)
 			{
 				strMsg = strName + " is having baby...";
-				z.zooMsg_que.push(strMsg);
+				z.PushMsg(strMsg);
 			}	
 		}
-		mtx.unlock();
+		z.UnlockMtxClock();
 		Sleep(1000);
 	}
 }
@@ -122,13 +121,6 @@ mateMsg Zoo::MateAsianElephant(const string maleName, const string femaleName)
 	}
 	else
 		return NOTPREGNANT;
-}
-
-string Zoo::PopMsg()
-{
-	string strMsg = zooMsg_que.front();
-	zooMsg_que.pop();
-	return strMsg;
 }
 
 void Zoo::CreateZooClock()

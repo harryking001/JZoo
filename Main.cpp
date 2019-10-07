@@ -8,44 +8,51 @@ using std::cout;
 using std::endl;
 using std::getline;
 using std::string;
+using std::iterator;
 
 Zoo jZoo;
 ArchiveFile archFile;
 bool bExit = false;
-std::mutex mtx;
-
+queue<string> Cmd_que;
 
 void GetNews(Zoo& jz)
 {
 	string strMsg;
-	mtx.lock();
 	while (jz.IsMsgEmpty() != true)
 	{
-		strMsg = jz.PopMsg();
-                cout << endl << "News: " << strMsg << endl;
-		if (strMsg.find(" is having baby...")!=std::string::npos)
+		strMsg = jz.FrontMsg();
+		jz.LockMtxClock();
+		cout << endl << "News: " << strMsg << endl;
+		jz.UnlockMtxClock();
+		if (strMsg.find(" is having baby...") != std::string::npos)
 		{
 			gender gd = (gender)::IsHappened(GENDER_PROB);
 			if (gd == MALE)
 			{
-				cout << "It's a boy! What name do you want to give him?" << endl;
+				jz.LockMtxClock();
+				cout << "It's a boy!" << endl;
+				jz.UnlockMtxClock();
 			}
 			else if (gd == FEMALE)
 			{
-				cout << "It's a girl! What name do you want to give her?" << endl;
+				jz.LockMtxClock();
+				cout << "It's a girl!" << endl;
+				jz.UnlockMtxClock();
 			}
-			string strName;
-			getline(cin, strName);
 			Asian_Elephant ase = jz.PopFetAse();
-			ase.Naming(strName);
+			ase.SetGender(gd);
 			Uint birthTicks = jz.GetTicks();
 			ase.SetBirthTicks(birthTicks);
 			Uint id = jz.IncAnimalNum();
 			ase.SetId(id);
 			jz.PushAse(ase);
+            if (Cmd_que.empty()!=true && Cmd_que.front() != "News")
+	        {
+                Cmd_que.push("News");
+	        }
 		}
 	}
-	mtx.unlock();
+	
 }
 
 void RunGetNews(Zoo& jz)
@@ -58,161 +65,223 @@ void RunGetNews(Zoo& jz)
 
 }
 
-void RunGetNews(Zoo& jz)
+void ShowStatus()
 {
-	while (!bExit)
+	cout << endl << "Zoo Status:" << endl;
+	cout << "    Manager Name: " + jZoo.managerName << endl;
+	cout << "    Species Number: " + to_string(jZoo.speciesNum) << endl;
+	cout << "    Animal Number: " + to_string(jZoo.animalNum) << endl;
+	cout << "    Funds: " + to_string(jZoo.funds) << endl;
+	cout << "    Operating Ticks: " + to_string(jZoo.opTicks) << endl;
+	cout << "Asian Elephant Status:" << endl;
+	for (vector<Asian_Elephant>::iterator it = jZoo.asEle_vec.begin(); it != jZoo.asEle_vec.end(); it++)
 	{
-		GetNews(jz);
-		Sleep(200);
+        cout << "    Name: " + it->name << endl;
+        cout << "    ID: " + to_string(it->id) << endl;
+        cout << "    Birth Place: " + it->birthPlace << endl;
+		string strGd = it->gd == MALE ? "Male" : (it->gd == FEMALE ? "Female" : "Unknow");
+		cout << "    Gender: " + strGd << endl;
+		cout << "    Age Ticks: " + to_string(it->ageTicks) << endl;
+		cout << "    Birth Ticks: " + to_string(it->birthTicks) << endl;
+		cout << "    Hungry Ticks: " + to_string(it->hungryTicks) << endl;
+        cout << "    Mate Ticks: " + to_string(it->mateTicks) << endl;
+        cout << "    Pregnant Ticks: " + to_string(it->pregTicks) << endl;
+        cout << "    Pregnant: " + to_string(it->preg) << endl;
+		cout << "    Father Name: " + it->father << endl;
+        cout << "    Mother Name: " + it->mother << endl;
+		cout << "    Height: " + to_string(it->height) << endl;
+		cout << "    Length: " + to_string(it->length) << endl;
+        cout << "    Weight: " + to_string(it->weight) << endl;
+		cout << "    Width: " + to_string(it->width) << endl;
+        cout << "    Price: " + to_string(it->price) << endl;
+		cout << "    Live: " + to_string(it->live) << endl << endl;
+	
 	}
-
+	cout<< "Asian Elephant Fetus Number: "+jZoo.aseFetus_que.size()<<endl;
 }
 
-bool ParseCmd(const string& str, Zoo& jz)
+bool ParseCmd(Zoo& jz)
 {
-	mtx.lock();
-	if (str == "Buy an Asian elephant")
+	while (!Cmd_que.empty())
 	{
-		if (!jz.DecMoney(BABY_ASE_PRICE))
+		string str = Cmd_que.front();
+		Cmd_que.pop();
+		if (str == "Buy Asian elephant")
 		{
-			mtx.lock();
-			cout << "I'm afraid you don't have enough money!" << endl;
-			mtx.unlock();
-			return false;
-		}
-                mtx.lock();
-		cout << "What gender do you want?" << endl;
-		string strGd;
-		gender gd;
-		getline(cin, strGd);
-		gd = strGd == "Male" ? MALE : FEMALE;
-		if(gd == MALE)
-		    cout << "What name do you want to give him?" << endl;
-		else if(gd == FEMALE)
-			cout << "What name do you want to give her?" << endl;
-		string strName;
-		getline(cin, strName);
-		Asian_Elephant ase(jz.IncAnimalNum(), strName, jz.GetTicks(), "Unknow", "Unknow", gd);
-		jz.PushAse(ase);
-		jz.UpdateSpeciesNum();
-		cout << "You have bought an Asian elephant, cost $50000!" << endl;
-		mtx.unlock();
+			if (!jz.DecMoney(BABY_ASE_PRICE))
+			{
+				jz.LockMtxClock();
+				cout << "I'm afraid you don't have enough money!" << endl;
+				jz.UnlockMtxClock();
+				return false;
+			}
+			jz.LockMtxClock();
+			cout << "What gender do you want?" << endl;
+			string strGd;
+			gender gd;
+			getline(cin, strGd);
+			gd = strGd == "Male" ? MALE : FEMALE;
+			if (gd == MALE)
+				cout << "What name do you want to give him?" << endl;
+			else if (gd == FEMALE)
+				cout << "What name do you want to give her?" << endl;
+			string strName;
+			getline(cin, strName);
+			Asian_Elephant ase(jz.IncAnimalNum(), strName, jz.GetTicks(), "Unknow", "Unknow", gd);
+			jz.PushAse(ase);
+			jz.UpdateSpeciesNum();
+			cout << "You have bought an Asian elephant, cost $50000!" << endl;
+			jz.UnlockMtxClock();
 
-	}
-	else if (str == "Mate Asian elephant")
-	{
-		mtx.lock();
-		string strMaleName,strFemaleName;
-		cout << "Please input the name of the male elephant!" << endl;
-		getline(cin, strMaleName);
-		cout << "Please input the name of the female elephant!" << endl;
-		getline(cin, strFemaleName);
-		mateMsg mateMsg = jz.MateAsianElephant (strMaleName, strFemaleName);
-		switch(mateMsg)
-		{
-		case PREGNANT:
-		{
-			cout << "Congratulations! "+ strFemaleName + " is pregnant!" << endl;
-			Asian_Elephant fetAse(0, "Unknow", 0, strMaleName, strFemaleName, UNKNOWGD);
-			jz.PushFetAse(fetAse);
-			break;
 		}
-		case NOTPREGNANT:
-			cout << strFemaleName + " and " + strMaleName + " had a good time ^_^" << endl;
-			break;
-		case MALE_UNDERMATEAGE:
-			cout << strMaleName + " is under mating age!" << endl;
-			break;
-		case FEMALE_UNDERMATEAGE:
-			cout << strFemaleName + " is under mating age!" << endl;
-			break;
-		case MALE_NOTREADY:
-			cout << strMaleName + " is not ready!" << endl;
-			break;
-		case FEMALE_NOTREADY:
-			cout << strFemaleName + " is not ready!" << endl;
-			break;
-		case SEX_WRONG:
-			cout << "Wrong sex!" << endl;
-			break;
-		case INBREED:
-			cout << "Inbreeding!" << endl;
-			break;
-		case MISSING_MALE:
-			cout << strMaleName + " is not our child!" << endl;
-			break;
-		case MISSING_FEMALE:
-			cout << strFemaleName + " is not our child!" << endl;
-			break;
-		}
-		mtx.unlock();
+		else if (str == "Mate Asian elephant")
+		{
+			jz.LockMtxClock();
+			string strMaleName, strFemaleName;
+			cout << "Please input the name of the male elephant!" << endl;
+			getline(cin, strMaleName);
+			cout << "Please input the name of the female elephant!" << endl;
+			getline(cin, strFemaleName);
+			mateMsg mateMsg = jz.MateAsianElephant(strMaleName, strFemaleName);
+			switch (mateMsg)
+			{
+			case PREGNANT:
+			{
+				cout << "Congratulations! " + strFemaleName + " is pregnant!" << endl;
+				Asian_Elephant fetAse(0, "Unknow", 0, strMaleName, strFemaleName, UNKNOWGD);
+				jz.PushFetAse(fetAse);
+				break;
+			}
+			case NOTPREGNANT:
+				cout << strFemaleName + " and " + strMaleName + " had a good time ^_^" << endl;
+				break;
+			case MALE_UNDERMATEAGE:
+				cout << strMaleName + " is under mating age!" << endl;
+				break;
+			case FEMALE_UNDERMATEAGE:
+				cout << strFemaleName + " is under mating age!" << endl;
+				break;
+			case MALE_NOTREADY:
+				cout << strMaleName + " is not ready!" << endl;
+				break;
+			case FEMALE_NOTREADY:
+				cout << strFemaleName + " is not ready!" << endl;
+				break;
+			case SEX_WRONG:
+				cout << "Wrong sex!" << endl;
+				break;
+			case INBREED:
+				cout << "Inbreeding!" << endl;
+				break;
+			case MISSING_MALE:
+				cout << strMaleName + " is not our child!" << endl;
+				break;
+			case MISSING_FEMALE:
+				cout << strFemaleName + " is not our child!" << endl;
+				break;
+			}
+			jz.UnlockMtxClock();
 
-	}
-	else if (str == "Feed Asian elephant")
-	{
-		mtx.lock();
-		string strName;
-		cout << "Please input the name of the elephant you want to feed!" << endl;
-		getline(cin, strName);
-		Asian_Elephant* pAse = jz.Find(strName);
-		if (jz.DecMoney(ASE_FOOD_COST))
+		}
+		else if (str == "Feed Asian elephant")
 		{
-            jz.Feed(*pAse);
-			cout << strName + " is full and happy^_^" << endl;
+			jz.LockMtxClock();
+			string strName;
+			cout << "Please input the name of the elephant you want to feed!" << endl;
+			getline(cin, strName);
+			Asian_Elephant* pAse = jz.Find(strName);
+			if (pAse == NULL)
+			{
+				cout << "I'm afraid we don't have this child!" << endl;
+			}
+			else
+			{
+				if (jz.DecMoney(ASE_FOOD_COST))
+				{
+					jz.Feed(*pAse);
+					cout << strName + " is full and happy^_^" << endl;
+				}
+				else
+				{
+					cout << "You don't have enough money!" << endl;
+				}
+			}
+			jz.UnlockMtxClock();
+		}
+		else if (str == "Status")
+		{
+			jz.LockMtxClock();
+			ShowStatus();
+			jz.UnlockMtxClock();
+		}
+		else if (str == "Save")
+		{
+			jz.LockMtxClock();
+			string strFile;
+			cout << "Please input the file name:" << endl;
+			getline(cin, strFile);
+			archFile.SetFileName(strFile);
+			if (archFile.Save(jz))
+				cout << "Save successful!" << endl;
+			else
+				cout << "Save failed!" << endl;
+			jz.UnlockMtxClock();
+		}
+		else if (str == "Quit")
+		{
+			return true;
+		}
+		else if (str == "News")
+		{
+		    string strMsg;
+		    jz.LockMtxClock();
+		    while (jz.IsMsgEmpty() != true)
+		    {
+				strMsg = jz.FrontMsg();
+			    jz.PopMsg();
+                string strName, strFatherName, strMotherName;
+				gender gd;
+				Asian_Elephant* ase = NULL;
+				while ((ase = jz.Find("Unknow")) != NULL)
+				{
+					strFatherName = ase->GetFatherName();
+					strMotherName = ase->GetMotherName();
+					gd = ase->GetGender();
+					if (gd == MALE)
+					{
+                        cout << "What name do you want to give " + strFatherName + " and " + strMotherName + "'s new boy?" << endl;
+					}
+					else if (gd == FEMALE)
+					{
+						cout << "What name do you want to give " + strFatherName + " and " + strMotherName + "'s new girl?" << endl;
+					}
+                    getline(cin, strName);    
+				    ase->Naming(strName);
+					cout << strName + ": I like it ^_^" << endl;
+				}  
+		    }
+		    jz.UnlockMtxClock();
+		}
+		else if (str == "Help")
+		{
+			jz.LockMtxClock();
+			cout << "Command description:" << endl;
+			cout << "<Buy Asian elephant>   Buy an Asian elephant" << endl;
+			cout << "<Mate Asian elephant>     Mate 2 Asian elephants" << endl;
+			cout << "<Feed Asian elephant>     Feed an Asian elephant" << endl;
+			cout << "<Status>                  Show the zoo status" << endl;
+			cout << "<Save>                    Save the game" << endl;
+			cout << "<Quit>                    Quit the game" << endl;
+			jz.UnlockMtxClock();
 		}
 		else
 		{
-			cout << "You don't have enough money!" << endl;
+			jz.LockMtxClock();
+			cout << "Wrong command, please input again!" << endl;
+			jz.UnlockMtxClock();
 		}
-                mtx.unlock();
 	}
-	else if (str == "Show me the status")
-	{
-                mtx.lock();
-		cout << "Please enter the command or call Help!" << endl;
-		mtx.unlock();
-	}
-	else if (str == "Save game")
-	{
-		mtx.lock();
-		string strFile;
-		cout << "Please input the file name:" << endl;
-		getline(cin, strFile);
-		archFile.SetFileName(strFile);
-		if (archFile.Save(jz))
-			cout << "Save successful!" << endl;
-		else
-			cout << "Save failed!" << endl;
-		mtx.unlock();
-	}
-	else if (str == "Quit game")
-	{
-		return true;
-	}
-	else if (str == "News")
-	{
-	    GetNews(jz);
-    }
-	else if (str == "Help")
-	{
-		mtx.lock();
-		cout << "Command description:" << endl;
-		cout << "<Buy an Asian elephant>   Buy an Asian elephant" << endl;
-		cout << "<Mate Asian elephant>     Mate 2 Asian elephants" << endl;
-		cout << "<Feed Asian elephant>     Feed an Asian elephant" << endl;
-		cout << "<Show me the status>      Show the zoo status" << endl;
-		cout << "<Save game>               Save the game" << endl;
-		cout << "<Quit game>               Quit the game" << endl;
-		mtx.unlock();
-	}
-	else
-	{
-		mtx.lock();
-		cout << "Wrong command, please input again!" << endl;
-		mtx.unlock();
-	}
-	mtx.unlock();
-
+	
 	return false;
 }
 
@@ -224,7 +293,8 @@ void Console_Loop(Zoo& jz)
 	while (!bExit)
 	{
 		std::getline(cin, strCmd);
-		bExit = ParseCmd(strCmd, jz);
+		Cmd_que.push(strCmd);
+		bExit = ParseCmd(jz);
 	}
 
 }

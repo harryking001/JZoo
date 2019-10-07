@@ -8,6 +8,7 @@ class Biological
 {
 	friend class ArchiveFile;
 	friend class Zoo;
+	friend void ShowStatus();
 public:
 	Biological();
 	Biological(Uint Id, string Name, Uint BirthTicks, string Father, string Mother);
@@ -19,6 +20,8 @@ public:
 	inline void SetId(Uint Id) { id = Id; }
 	inline void Naming(string Name) { name = Name; }
 	inline string GetName() const { return name; }
+	inline string GetFatherName() const { return father; }
+	inline string GetMotherName() const { return mother; }
 	inline void SetBirthTicks(Uint Ticks) { birthTicks = Ticks; }
 	inline Uint GetBirthTicks() { return birthTicks; }
 protected:

@@ -94,6 +94,7 @@ int Asian_Elephant::CheckHungry() const
 }
 
 bool Asian_Elephant::CheckBreed() const
+
 {
 	return pregTicks == PREGTICKS ? true:false;
 }

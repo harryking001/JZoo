@@ -1,32 +1,4 @@
-﻿  ArchiveFile.cpp
-c:\users\86135\desktop\jzoo\jzoo\zoo.h(45): warning C4244: “初始化”: 从“unsigned __int64”转换到“int”，可能丢失数据
-c:\users\86135\desktop\jzoo\jzoo\zoo.h(49): warning C4244: “初始化”: 从“unsigned __int64”转换到“int”，可能丢失数据
-c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(63): warning C4244: “=”: 从“unsigned __int64”转换到“unsigned int”，可能丢失数据
-c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(197): warning C4018: “<”: 有符号/无符号不匹配
-c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(226): warning C4018: “<”: 有符号/无符号不匹配
-c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(233): warning C4018: “<”: 有符号/无符号不匹配
-c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(240): warning C4018: “<”: 有符号/无符号不匹配
-c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(247): warning C4018: “<”: 有符号/无符号不匹配
-c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(254): warning C4018: “<”: 有符号/无符号不匹配
-c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(261): warning C4018: “<”: 有符号/无符号不匹配
-c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(268): warning C4018: “<”: 有符号/无符号不匹配
-c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(275): warning C4018: “<”: 有符号/无符号不匹配
-c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(282): warning C4018: “<”: 有符号/无符号不匹配
-c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(289): warning C4018: “<”: 有符号/无符号不匹配
-c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(296): warning C4018: “<”: 有符号/无符号不匹配
-c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(303): warning C4018: “<”: 有符号/无符号不匹配
-c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(310): warning C4018: “<”: 有符号/无符号不匹配
-c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(317): warning C4018: “<”: 有符号/无符号不匹配
-c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(340): warning C4018: “<”: 有符号/无符号不匹配
-c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(347): warning C4018: “<”: 有符号/无符号不匹配
-c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(354): warning C4018: “<”: 有符号/无符号不匹配
-c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(361): warning C4018: “<”: 有符号/无符号不匹配
-  Asian_Elephant.cpp
-  Main.cpp
-c:\users\86135\desktop\jzoo\jzoo\zoo.h(45): warning C4244: “初始化”: 从“unsigned __int64”转换到“int”，可能丢失数据
-c:\users\86135\desktop\jzoo\jzoo\zoo.h(49): warning C4244: “初始化”: 从“unsigned __int64”转换到“int”，可能丢失数据
-  Zoo.cpp
-c:\users\86135\desktop\jzoo\jzoo\zoo.h(45): warning C4244: “初始化”: 从“unsigned __int64”转换到“int”，可能丢失数据
-c:\users\86135\desktop\jzoo\jzoo\zoo.h(49): warning C4244: “初始化”: 从“unsigned __int64”转换到“int”，可能丢失数据
-  正在生成代码...
+﻿  Main.cpp
+c:\users\86135\desktop\jzoo\jzoo\zoo.h(57): warning C4244: “初始化”: 从“unsigned __int64”转换到“int”，可能丢失数据
+c:\users\86135\desktop\jzoo\jzoo\zoo.h(62): warning C4244: “初始化”: 从“unsigned __int64”转换到“int”，可能丢失数据
   J_Zoo.vcxproj -> C:\Users\86135\Desktop\JZoo\JZoo\Debug\J_Zoo.exe

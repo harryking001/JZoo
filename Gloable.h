@@ -39,7 +39,7 @@ enum hungryMsg
 const Uint BABY_ASE_PRICE = 50000;
 const Uint ASE_FOOD_COST = 100;
 const double GENDER_PROB = 0.5;
-const double PREG_PROB = 0.2;
+const double PREG_PROB = 0.9;
 const int ERROR = -1;
 const int TRUE = 1;
 const int FALSE = 0;

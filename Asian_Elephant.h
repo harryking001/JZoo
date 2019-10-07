@@ -9,6 +9,7 @@ class Asian_Elephant :
 {
 	friend class ArchiveFile;
 	friend class Zoo;
+	friend void ShowStatus();
 public:
 	Asian_Elephant();
 	Asian_Elephant(Uint Id, string Name, Uint BirthTicks, string Father, string Mother, gender Gd);
@@ -24,12 +25,12 @@ public:
 	virtual int CheckHungry() const;
 	virtual bool CheckBreed() const;
 private:
-	static const Uint MATEAGETICK = 100;
+	static const Uint MATEAGETICK = 20;
 	static const Uint MATEINTERTICK = 50;
-	static const Uint HUNGRYGTICKS = 30;
-	static const Uint HUNGRYWARNINGTICKS = 100;
+	static const Uint HUNGRYGTICKS = 300;
+	static const Uint HUNGRYWARNINGTICKS = 800;
 	static const Uint HUNGRYDIETICKS = 6000;
-	static const Uint PREGTICKS = 200;
+	static const Uint PREGTICKS = 30;
 
 };
 

@@ -7,6 +7,7 @@ class Animal :
 {
 	friend class ArchiveFile;
 	friend class Zoo;
+	friend void ShowStatus();
 public:
 	Animal();
 	Animal(Uint Id, string Name, Uint BirthTicks, string Father, string Mother, gender Gd);
@@ -21,6 +22,8 @@ public:
 	virtual int CheckHungry() const = 0;
 	virtual inline bool IsPreg() const{ return preg; }
 	virtual bool CheckBreed() const = 0;
+	inline void SetGender(const gender& gend) { gd = gend; }
+	inline gender GetGender() { return gd; }
 protected:
 	Uint weight;
 	Uint height;
