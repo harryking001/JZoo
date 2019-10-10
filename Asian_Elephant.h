@@ -26,11 +26,11 @@ public:
 	virtual bool CheckBreed() const;
 private:
 	static const Uint MATEAGETICK = 20;
-	static const Uint MATEINTERTICK = 50;
+	static const Uint MATEINTERTICK = 10;
 	static const Uint HUNGRYGTICKS = 300;
 	static const Uint HUNGRYWARNINGTICKS = 800;
 	static const Uint HUNGRYDIETICKS = 6000;
-	static const Uint PREGTICKS = 30;
+	static const Uint PREGTICKS = 10;
 
 };
 

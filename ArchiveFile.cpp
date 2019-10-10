@@ -46,6 +46,14 @@ bool ArchiveFile::Load(Zoo& z)
 			ss >> num;
 			z.speciesNum = num;
 		}
+		else if (strKey == "Animal_Num")
+		{
+			Uint num;
+			stringstream ss;
+			ss << strValue;
+			ss >> num;
+			z.animalNum = num;
+		}
 		else if (strKey == "Funds")
 		{
 			ULLong fund;
@@ -198,7 +206,7 @@ bool ArchiveFile::Load(Zoo& z)
 			{
 				Asian_Elephant asEle(unIDVec[i], sNameVec[i], sBirthPlaceVec[i], unBirthTicksVec[i], unAgeTicksVec[i], unPriceVec[i], bLiveVec[i], strFatherVec[i], strMotherVec[i], 
 					unWgtVec[i], unHgtVec[i], unWidVec[i], unLenVec[i], gendVec[i], unHungryTicksVec[i], unPregTicksVec[i], unMateTicksVec[i], bPregVec[i]);
-				z.asEle_vec.push_back(asEle);
+				z.PushAse(asEle);
 			}
 		}
 	}
@@ -217,6 +225,7 @@ bool ArchiveFile::Save(const Zoo& z)
 	outfile << "<Zoo> NULL" << endl;
 	outfile << "Manager_Name " << z.managerName << endl;
 	outfile << "Species_Num " << z.speciesNum << endl;
+	outfile << "Animal_Num " << z.animalNum << endl;
 	outfile << "Funds " << z.funds << endl;
 	outfile << "Operating_Ticks " << z.opTicks << endl;
 	outfile << "</Zoo> NULL" << endl;

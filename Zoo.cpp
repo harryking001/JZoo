@@ -33,6 +33,7 @@ void RunZooClock(Zoo& z)
 			bool bBreed = it->CheckBreed();
 			if (bBreed)
 			{
+				it->Breed();
 				strMsg = strName + " is having baby...";
 				z.PushMsg(strMsg);
 			}	

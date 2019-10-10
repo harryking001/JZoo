@@ -2,10 +2,12 @@
 #include "Asian_Elephant.h"
 #include <vector>
 #include <queue>
+#include <stack>
 #include <thread>
 #include <Windows.h>
 using std::vector;
 using std::queue;
+using std::stack;
 using std::to_string;
 
 

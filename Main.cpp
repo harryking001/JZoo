@@ -13,7 +13,8 @@ using std::iterator;
 Zoo jZoo;
 ArchiveFile archFile;
 bool bExit = false;
-queue<string> Cmd_que;
+stack<string> Cmd_stack;
+Uint MsgNum = 0;
 
 void GetNews(Zoo& jz)
 {
@@ -21,11 +22,13 @@ void GetNews(Zoo& jz)
 	while (jz.IsMsgEmpty() != true)
 	{
 		strMsg = jz.FrontMsg();
+		jz.PopMsg();
 		jz.LockMtxClock();
 		cout << endl << "News: " << strMsg << endl;
 		jz.UnlockMtxClock();
 		if (strMsg.find(" is having baby...") != std::string::npos)
 		{
+			MsgNum++;
 			gender gd = (gender)::IsHappened(GENDER_PROB);
 			if (gd == MALE)
 			{
@@ -45,10 +48,12 @@ void GetNews(Zoo& jz)
 			ase.SetBirthTicks(birthTicks);
 			Uint id = jz.IncAnimalNum();
 			ase.SetId(id);
+			jz.LockMtxClock();
 			jz.PushAse(ase);
-            if (Cmd_que.empty()!=true && Cmd_que.front() != "News")
+			jz.UnlockMtxClock();
+            if (Cmd_stack.empty() == true || (Cmd_stack.empty()!=true && Cmd_stack.top() != "News"))
 	        {
-                Cmd_que.push("News");
+				Cmd_stack.push("News");
 	        }
 		}
 	}
@@ -102,10 +107,10 @@ void ShowStatus()
 
 bool ParseCmd(Zoo& jz)
 {
-	while (!Cmd_que.empty())
+	while (!Cmd_stack.empty())
 	{
-		string str = Cmd_que.front();
-		Cmd_que.pop();
+		string str = Cmd_stack.top();
+		Cmd_stack.pop();
 		if (str == "Buy Asian elephant")
 		{
 			if (!jz.DecMoney(BABY_ASE_PRICE))
@@ -233,12 +238,9 @@ bool ParseCmd(Zoo& jz)
 		}
 		else if (str == "News")
 		{
-		    string strMsg;
 		    jz.LockMtxClock();
-		    while (jz.IsMsgEmpty() != true)
+		    while (MsgNum--)
 		    {
-				strMsg = jz.FrontMsg();
-			    jz.PopMsg();
                 string strName, strFatherName, strMotherName;
 				gender gd;
 				Asian_Elephant* ase = NULL;
@@ -266,7 +268,7 @@ bool ParseCmd(Zoo& jz)
 		{
 			jz.LockMtxClock();
 			cout << "Command description:" << endl;
-			cout << "<Buy Asian elephant>   Buy an Asian elephant" << endl;
+			cout << "<Buy Asian elephant>      Buy an Asian elephant" << endl;
 			cout << "<Mate Asian elephant>     Mate 2 Asian elephants" << endl;
 			cout << "<Feed Asian elephant>     Feed an Asian elephant" << endl;
 			cout << "<Status>                  Show the zoo status" << endl;
@@ -293,7 +295,7 @@ void Console_Loop(Zoo& jz)
 	while (!bExit)
 	{
 		std::getline(cin, strCmd);
-		Cmd_que.push(strCmd);
+		Cmd_stack.push(strCmd);
 		bExit = ParseCmd(jz);
 	}
 
