@@ -1,2 +1,3 @@
 # JZoo
-A simple zoo game for c++ practice.
+A simple zoo operating game for c++ learning.
+
