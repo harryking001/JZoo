@@ -25,7 +25,7 @@ Biological::~Biological()
 
 void Biological::Die()
 {
-	this->~Biological();
+	live = false;
 }
 
 void Biological::Grow(Uint Ticks)

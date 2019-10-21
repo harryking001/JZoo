@@ -7,12 +7,22 @@ void RunZooClock(Zoo& z)
 	{
 		z.LockMtxClock();
 		z.opTicks++;
-		for (vector<Asian_Elephant>::iterator it = z.asEle_vec.begin(); it != z.asEle_vec.end(); it++)
+		for (vector<Asian_Elephant>::iterator it = z.asEle_vec.begin(); it != z.asEle_vec.end(); )
 		{
 			it->Grow(z.opTicks);
-			hungryMsg h = (hungryMsg)it->CheckHungry();
 			string strName = "Asian elephant " + it->GetName();
 			string strMsg;
+
+			if (!it->CheckLife())
+			{
+				strMsg = strName + " had a wonderful life and went to the heaven.";
+				z.PushMsg(strMsg);
+				it->Die();
+				it = z.asEle_vec.erase(it);
+				continue;
+			}
+			hungryMsg h = (hungryMsg)it->CheckHungry();
+			
 			switch (h)
 			{
 			case HUNGRY:
@@ -27,7 +37,8 @@ void RunZooClock(Zoo& z)
 				strMsg = strName + " died of hunger!";
 				z.PushMsg(strMsg);
 				it->Die();
-				break;	
+				it = z.asEle_vec.erase(it);
+				continue;	
 			}
             
 			bool bBreed = it->CheckBreed();
@@ -37,6 +48,7 @@ void RunZooClock(Zoo& z)
 				strMsg = strName + " is having baby...";
 				z.PushMsg(strMsg);
 			}	
+			it++;
 		}
 		z.UnlockMtxClock();
 		Sleep(1000);
@@ -72,7 +84,12 @@ void Zoo::UpdateSpeciesNum()
 
 }
 
-Asian_Elephant * Zoo::Find(const string name)
+Uint Zoo::GetAsePrice(Asian_Elephant * pAse)
+{
+	return pAse->price;
+}
+
+Asian_Elephant * Zoo::FindAse(const string& name)
 {
 	vector<Asian_Elephant>::iterator it = asEle_vec.begin();
 	for (; it != asEle_vec.end(); it++)
@@ -83,10 +100,27 @@ Asian_Elephant * Zoo::Find(const string name)
 	return NULL;
 }
 
-mateMsg Zoo::MateAsianElephant(const string maleName, const string femaleName)
+Asian_Elephant Zoo::RemoveAse(const string& name)
 {
-	Asian_Elephant* maleAse = Find(maleName);
-	Asian_Elephant* femaleAse = Find(femaleName);
+	vector<Asian_Elephant>::iterator it = asEle_vec.begin();
+	Asian_Elephant ase;
+	for (; it != asEle_vec.end(); it++)
+	{
+		if (it->name == name)//Zoo需要访问Biological的name属性
+		{
+			ase = *it;
+            asEle_vec.erase(it);
+			return ase;
+		}	
+	}
+	ase.SetBirthTicks(0);
+	return ase;
+}
+
+mateMsg Zoo::MateAsianElephant(const string& maleName, const string& femaleName)
+{
+	Asian_Elephant* maleAse = FindAse(maleName);
+	Asian_Elephant* femaleAse = FindAse(femaleName);
 	if(maleAse && femaleAse)
 	{
         //Zoo需要访问Animal的name属性以及Asian_Elephant的MATEAGETICK及MATEINTERTICK属性

@@ -21,16 +21,17 @@ public:
 	Uint Eat();
 	void Excrete();
 	bool Mate(Asian_Elephant*);
-	void Grow(Uint Ticks);
+	void Grow(const Uint Ticks);
 	virtual int CheckHungry() const;
 	virtual bool CheckBreed() const;
+	virtual bool CheckLife() const;
 private:
-	static const Uint MATEAGETICK = 20;
+	static const Uint MATEAGETICK = 50;
 	static const Uint MATEINTERTICK = 10;
-	static const Uint HUNGRYGTICKS = 300;
-	static const Uint HUNGRYWARNINGTICKS = 800;
-	static const Uint HUNGRYDIETICKS = 6000;
-	static const Uint PREGTICKS = 10;
-
+	static const Uint HUNGRYGTICKS = 100;
+	static const Uint HUNGRYWARNINGTICKS = 150;
+	static const Uint HUNGRYDIETICKS = 300;
+	static const Uint PREGTICKS = 30;
+	static const Uint LIVETICKS = 500;
 };
 

@@ -77,6 +77,7 @@ void Asian_Elephant::Grow(Uint Ticks)
 	height = ageTicks < 3000 ? 1500 + ageTicks : 1500 + 3000;
 	width = ageTicks < 2000 ? 800 + ageTicks : 800 + 2000;
 	length = ageTicks < 5000 ? 1600 + ageTicks : 1600 + 5000;
+	price = ageTicks < 3000 ? 50000 + 10 * ageTicks : 80000 - 10 * (ageTicks - 3000);
 }
 
 int Asian_Elephant::CheckHungry() const
@@ -97,6 +98,11 @@ bool Asian_Elephant::CheckBreed() const
 
 {
 	return pregTicks == PREGTICKS ? true:false;
+}
+
+bool Asian_Elephant::CheckLife() const
+{
+	return ageTicks == LIVETICKS ? false:true;
 }
 
 

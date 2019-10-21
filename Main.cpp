@@ -16,6 +16,14 @@ bool bExit = false;
 stack<string> Cmd_stack;
 Uint MsgNum = 0;
 
+/**
+ *  @brief     从消息队列中获取消息
+ *             Get news from the message queue
+ *  @param     z Zoo引用
+ *             z reference of the Zoo object
+ *  @return    无
+ *             void
+ */
 void GetNews(Zoo& jz)
 {
 	string strMsg;
@@ -60,6 +68,14 @@ void GetNews(Zoo& jz)
 	
 }
 
+/**
+ *  @brief     用于获取消息的线程运行函数
+ *             Get news thread function
+ *  @param     z Zoo引用
+ *             z reference of the zoo object
+ *  @return    无
+ *             void
+ */
 void RunGetNews(Zoo& jz)
 {
 	while (!bExit)
@@ -70,6 +86,14 @@ void RunGetNews(Zoo& jz)
 
 }
 
+/**
+ *  @brief     在控制台上打印动物园状态信息
+ *             Print the zoo information on the console
+ *  @param     无
+ *             void
+ *  @return    无
+ *             void
+ */
 void ShowStatus()
 {
 	cout << endl << "Zoo Status:" << endl;
@@ -102,9 +126,17 @@ void ShowStatus()
 		cout << "    Live: " + to_string(it->live) << endl << endl;
 	
 	}
-	cout<< "Asian Elephant Fetus Number: "+jZoo.aseFetus_que.size()<<endl;
+	cout<< "Asian Elephant Fetus Number: "+ to_string(jZoo.aseFetus_que.size())<<endl;
 }
 
+/**
+ *  @brief     解析玩家输入的命令
+ *             Parse the commands the player inputs
+ *  @param     z Zoo引用
+ *             z reference of the zoo object
+ *  @return    bool 解析成功true，失败false
+ *             bool true if success, false if fail
+ */
 bool ParseCmd(Zoo& jz)
 {
 	while (!Cmd_stack.empty())
@@ -138,6 +170,25 @@ bool ParseCmd(Zoo& jz)
 			cout << "You have bought an Asian elephant, cost $50000!" << endl;
 			jz.UnlockMtxClock();
 
+		}
+		else if (str == "Sell Asian elephant")
+		{
+			string strName;
+			jz.LockMtxClock();
+			cout << "Please input the name of the elephant you want to sell!" << endl;
+			getline(cin, strName);
+			Asian_Elephant ase = jz.RemoveAse(strName);
+			if (ase.GetBirthTicks() != 0)
+			{
+				Uint asePrive = jz.GetAsePrice(&ase);
+				jz.IncMoney(asePrive);
+				cout << "Goodbye " + strName + "!" << endl;
+			}
+			else
+			{
+				cout << strName + " is not our child!" << endl;
+			}
+			jz.UnlockMtxClock();
 		}
 		else if (str == "Mate Asian elephant")
 		{
@@ -194,7 +245,7 @@ bool ParseCmd(Zoo& jz)
 			string strName;
 			cout << "Please input the name of the elephant you want to feed!" << endl;
 			getline(cin, strName);
-			Asian_Elephant* pAse = jz.Find(strName);
+			Asian_Elephant* pAse = jz.FindAse(strName);
 			if (pAse == NULL)
 			{
 				cout << "I'm afraid we don't have this child!" << endl;
@@ -203,7 +254,7 @@ bool ParseCmd(Zoo& jz)
 			{
 				if (jz.DecMoney(ASE_FOOD_COST))
 				{
-					jz.Feed(*pAse);
+					jz.Feed(pAse);
 					cout << strName + " is full and happy^_^" << endl;
 				}
 				else
@@ -239,12 +290,13 @@ bool ParseCmd(Zoo& jz)
 		else if (str == "News")
 		{
 		    jz.LockMtxClock();
-		    while (MsgNum--)
+		    while (MsgNum)
 		    {
+				MsgNum--;
                 string strName, strFatherName, strMotherName;
 				gender gd;
 				Asian_Elephant* ase = NULL;
-				while ((ase = jz.Find("Unknow")) != NULL)
+				while ((ase = jz.FindAse("Unknow")) != NULL)
 				{
 					strFatherName = ase->GetFatherName();
 					strMotherName = ase->GetMotherName();
@@ -269,11 +321,13 @@ bool ParseCmd(Zoo& jz)
 			jz.LockMtxClock();
 			cout << "Command description:" << endl;
 			cout << "<Buy Asian elephant>      Buy an Asian elephant" << endl;
+			cout << "<Sell Asian elephant>     Sell an Asian elephant" << endl;
 			cout << "<Mate Asian elephant>     Mate 2 Asian elephants" << endl;
 			cout << "<Feed Asian elephant>     Feed an Asian elephant" << endl;
 			cout << "<Status>                  Show the zoo status" << endl;
 			cout << "<Save>                    Save the game" << endl;
 			cout << "<Quit>                    Quit the game" << endl;
+			cout << "<Help>                    Show the commands" << endl;
 			jz.UnlockMtxClock();
 		}
 		else
@@ -287,6 +341,14 @@ bool ParseCmd(Zoo& jz)
 	return false;
 }
 
+/**
+ *  @brief     读玩家命令循环
+ *             Read commands loop
+ *  @param     z Zoo引用
+ *             z reference of the zoo object
+ *  @return    无
+ *             void
+ */
 void Console_Loop(Zoo& jz)
 {
 	string strCmd;
@@ -301,6 +363,13 @@ void Console_Loop(Zoo& jz)
 
 }
 
+/**
+ *  @brief     主函数
+ *             Main flow
+ *  @param     无
+ *             void
+ *  @return    int
+ */
 int main()
 {
 	while(true)
@@ -312,6 +381,7 @@ int main()
 	    cout << "1: Start a new game   2: Load a game   3: Quit" << endl;
 	    cout << "Please select command number..." << endl;
 
+		bExit = false;
 		string strInit, strFile, strName;
 		getline(cin, strInit);
 		if (strInit == "1")

@@ -10,68 +10,196 @@ using std::queue;
 using std::stack;
 using std::to_string;
 
-
+/**
+ * 动物园类
+ * Zoo class which used to load and save zoo information
+ */
 class Zoo
 {
-	//friend bool ArchiveFile::Load(const Zoo& z) const;
-	//friend bool ArchiveFile::Save(Zoo& z) const;
+
 	friend class ArchiveFile;
 	friend void RunZooClock(Zoo& z);
 	friend void ShowStatus();
 public:
+	/**
+	 * @brief      构造函数
+	 *             Constructor function.
+	 *
+	 */
 	Zoo();
+
+	/**
+	 * @brief      析构函数
+	 *             Destructor function.
+	 *
+	 */
 	~Zoo();
+
+	/**
+	 *  @brief     获取时间
+	 *             Get time
+	 *  @return    时间字符串
+	 *             string
+	 */
     string GetCurTime();
-	
+
+	/**
+	 *  @brief     更新动物种类数
+	 *             Update the species number
+	 *  @return    无
+	 *             void
+	 */
 	void UpdateSpeciesNum();
-
-	Asian_Elephant* Find(const string name);
-
-	mateMsg MateAsianElephant(const string maleName, const string femaleName);
-
-	inline void HireManager(string strManager)
+	
+	/**
+	 *  @brief     雇用动物园经理
+	 *             Hire zoo manager
+	 *  @param     strManager 经理姓名（玩家姓名）
+	 *             strManager manager name(player name)
+	 *  @return    无
+	 *             void
+	 */
+	inline void HireManager(const string& strManager)
 	{
 		managerName = strManager;
 	}
 
-	inline Uint Feed(Animal& ani)
+	/**
+	 *  @brief     喂动物
+	 *             Feed animal
+	 *  @param     ani animal类指针
+	 *             ani pointer to class animal
+	 *  @return    Uint 食物费用
+	 *             Uint Food cost
+	 */
+	inline Uint Feed(Animal* ani)
 	{
-		return ani.Eat();
+		return ani->Eat();
 	}
 
+	/**
+	 *  @brief     动物园动物的总数量加一
+	 *             Sum of the zoo animal plus one
+	 *  @return    Uint 动物园动物总数
+	 *             Uint sum of the zoo animal
+	 */
 	inline Uint IncAnimalNum()
 	{
 		 return ++animalNum;
 	}
 
+	/**
+	 *  @brief     动物园动物的总数量减一
+	 *             Sum of the zoo animal minus one
+	 *  @return    Uint 动物园动物总数
+	 *             Uint sum of the zoo animal
+	 */
 	inline Uint DecAnimalNum()
 	{
 		return --animalNum;
 	}
 
+	/**
+	 *  @brief     获取动物园的滴答数
+	 *             Get the ticks of the zoo
+	 *  @return    Uint 动物园的滴答数
+	 *             Uint ticks of the zoo
+	 */
 	inline Uint GetTicks() const
 	{
 		return opTicks;
 	}
 
-	inline void IncMoney(Uint money)
+	/**
+	 *  @brief     增加动物园资金
+	 *             Increase the funds of the zoo
+	 *  @param     money 增加的资金数
+	 *             money the increased money
+	 *  @return    无
+	 *             void
+	 */
+	inline void IncMoney(const Uint money)
 	{
-		int balance = funds + money;
+		funds += money;
 	}
 
-	inline bool DecMoney(Uint money)
+	/**
+	 *  @brief     减少动物园资金
+	 *             Decrease the funds of the zoo
+	 *  @param     money 减少的资金数
+	 *             money the decreased money
+	 *  @return    无
+	 *             void
+	 */
+	inline bool DecMoney(const Uint money)
 	{
 		int balance = funds - money;
 		return balance >= 0 ? funds = balance,true : false;
 	}
+	
+	/**
+	 *  @brief     获取亚洲象价格
+	 *             Get the Asian elephant price
+	 *  @param     pAse 亚洲象类的指针
+	 *             pAse pointer to Asian_Elephant
+	 *  @return    Uint 亚洲象价格
+	 *             Uint price of Asian elephant
+	 */
+	Uint GetAsePrice(Asian_Elephant* pAse);
 
-	inline void PushAse(Asian_Elephant& ase)
+	/**
+	 *  @brief     在亚洲象容器中按名字找寻亚洲象
+	 *             Find Asian elephant though name from vector
+	 *  @param     name 亚洲象名字
+	 *             name name of the Asian elephant
+	 *  @return    Asian_Elephant* 指向亚洲象类的指针
+	 *             Asian_Elephant* pointer to Asian elephant
+	 */
+	Asian_Elephant* FindAse(const string& name);
+
+	/**
+	 *  @brief     从亚洲象容器中移除亚洲象对象
+	 *             Remove Asian elephant from the vector
+	 *  @param     name 亚洲象名字
+	 *             name name of the Asian elephant
+	 *  @return    Asian_Elephant 被移除的亚洲象对象的拷贝
+	 *             Asian_Elephant the copy of the removed Asian elephant object
+	 */
+	Asian_Elephant RemoveAse(const string& name);
+
+	/**
+	 *  @brief     亚洲象交配
+	 *             Mate the two Asian elephant
+	 *  @param     maleName 公亚洲象名字
+	 *             maleName name of the Asian elephant
+	 *  @param     femaleName 母亚洲象名字
+	 *             femaleName name of the Asian elephant
+	 *  @return    mateMsg 交配消息
+	 *             mateMsg mate message
+	 */
+	mateMsg MateAsianElephant(const string& maleName, const string& femaleName);
+
+	/**
+	 *  @brief     将亚洲象对象引用压入亚洲象容器
+	 *             Push the Asian elephant object reference into vector
+	 *  @param     ase 亚洲象对象引用
+	 *             ase Asian elephant object reference
+	 *  @return    无
+	 *             void
+	 */
+	inline void PushAse(const Asian_Elephant& ase)
 	{
 		mtx_asEle.lock();
 		asEle_vec.push_back(ase);
 		mtx_asEle.unlock();
 	}
 
+	/**
+	 *  @brief     将亚洲象对象弹出亚洲象容器
+	 *             Pop the Asian elephant object out of vector
+	 *  @return    无
+	 *             void
+	 */
 	inline void PopAse()
 	{
 		mtx_asEle.lock();
@@ -79,14 +207,27 @@ public:
 		mtx_asEle.unlock();
 	}
 
-	inline bool PushFetAse(Asian_Elephant fetAse)
+	/**
+	 *  @brief     将亚洲象对象引用压入亚洲象胎儿队列
+	 *             Push the fetus Asian elephant object reference into queue
+	 *  @param     ase 亚洲象对象引用
+	 *             ase Asian elephant object reference
+	 *  @return    无
+	 *             void
+	 */
+	inline void PushFetAse(const Asian_Elephant& fetAse)
 	{
 		mtx_aseFetus.lock();
 		aseFetus_que.push(fetAse);
 		mtx_aseFetus.unlock();
-		return true;
 	}
 
+	/**
+	 *  @brief     将亚洲象对象弹出胎儿亚洲象队列
+	 *             Pop the Fetus Asian elephant object out of queue
+	 *  @return    Asian_Elephant 亚洲象对象拷贝
+	 *             Asian_Elephant Copy of the Asian Elephant object
+	 */
 	inline Asian_Elephant PopFetAse()
 	{
 		mtx_aseFetus.lock();
@@ -96,13 +237,27 @@ public:
 		return ase;
 	}
 
-	inline void PushMsg(string strMsg)
+	/**
+	 *  @brief     将动物园消息压入消息队列
+	 *             Push the zoo message into queue
+	 *  @param     strMsg 消息字符串引用
+	 *             strMsg Message reference
+	 *  @return    无
+	 *             void
+	 */
+	inline void PushMsg(const string& strMsg)
 	{
 		mtx_Msg.lock();
 		zooMsg_que.push(strMsg);
 		mtx_Msg.unlock();
 	}
 
+	/**
+	 *  @brief     将动物园消息弹出消息队列
+	 *             Pop the zoo message out of queue
+	 *  @return    无
+	 *             void
+	 */
 	inline void PopMsg()
 	{
 		mtx_Msg.lock();
@@ -110,6 +265,12 @@ public:
 		mtx_Msg.unlock();
 	}
 
+	/**
+	 *  @brief     获取消息队列中的最早的消息
+	 *             Get the earliest message in the queue
+	 *  @return    string 最早的消息字符串
+	 *             string the earliest message
+	 */
 	inline string FrontMsg()
 	{
 		mtx_Msg.lock();
@@ -118,22 +279,41 @@ public:
 		return strMsg;
 	}
 
+	/**
+	 *  @brief     判断消息队列是否为空
+	 *             If the message queue is empty
+	 *  @return    bool true为空，false为非空
+	 *             bool true if empty, false if not empty
+	 */
 	inline bool IsMsgEmpty() const
 	{
 		return zooMsg_que.empty();
 	}
 
+	/**
+	 *  @brief     动物园时钟互斥量加锁
+	 *             Zoo clock mutex lock
+	 *  @return    无
+	 *             void
+	 */
 	inline void LockMtxClock()
 	{
 		mtx_Clock.lock();
 	}
 
+	/**
+	 *  @brief     动物园时钟互斥量解锁
+	 *             Zoo clock mutex unlock
+	 *  @return    无
+	 *             void
+	 */
 	inline void UnlockMtxClock()
 	{
 		mtx_Clock.unlock();
 	}
 
 private:
+
 	void CreateZooClock();
 private:
 	string currentTime;

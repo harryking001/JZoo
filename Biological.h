@@ -16,14 +16,15 @@ public:
 	virtual ~Biological();//即使定义了析构函数，系统还是会合成默认析构函数
 	virtual void Die();
 	virtual Biological* Breed() = 0;
-	virtual void Grow(Uint Ticks);
-	inline void SetId(Uint Id) { id = Id; }
-	inline void Naming(string Name) { name = Name; }
+	virtual void Grow(const Uint Ticks);
+	inline void SetId(const Uint Id) { id = Id; }
+	inline void Naming(const string& Name) { name = Name; }
 	inline string GetName() const { return name; }
 	inline string GetFatherName() const { return father; }
 	inline string GetMotherName() const { return mother; }
-	inline void SetBirthTicks(Uint Ticks) { birthTicks = Ticks; }
+	inline void SetBirthTicks(const Uint Ticks) { birthTicks = Ticks; }
 	inline Uint GetBirthTicks() { return birthTicks; }
+	virtual bool CheckLife() const = 0;
 protected:
 	Uint id;
 	string name;

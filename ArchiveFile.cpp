@@ -210,6 +210,7 @@ bool ArchiveFile::Load(Zoo& z)
 			}
 		}
 	}
+	infile.close();
 	return true;
 }
 
@@ -374,6 +375,7 @@ bool ArchiveFile::Save(const Zoo& z)
 	outfile << z.asEle_vec[i].preg << endl;
 
 	outfile << "</Asian_Elephant> NULL" << endl;
+	outfile.close();
 	return true;
 }
 

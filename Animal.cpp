@@ -23,8 +23,5 @@ Animal::~Animal()
 {
 }
 
-void Animal::Die()
-{
-}
 
 
