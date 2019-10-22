@@ -14,7 +14,6 @@ public:
 	Animal(Uint Id, string Name, string BirthPlace, Uint BirthTicks, Uint AgeTicks, Uint Price, bool Live, string Father, string Mother,
 		Uint Weight, Uint Height, Uint Width, Uint Length, gender Gd, Uint HungryTicks, Uint PregTicks, Uint MateTicks, bool Preg);
 	virtual ~Animal();
-	virtual void Eat(Biological&) = 0;
 	virtual Uint Eat() = 0;
 	virtual void Excrete() = 0;
 	//virtual bool Mate(Animal&) = 0;

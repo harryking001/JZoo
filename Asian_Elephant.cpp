@@ -24,19 +24,13 @@ Asian_Elephant::~Asian_Elephant()
 {
 }
 
-Asian_Elephant * Asian_Elephant::Breed()
+bool Asian_Elephant::Breed()
 {
 	if (!preg)
-		return NULL;
+		return false;
 	preg = false;
 	pregTicks = 0;
-	Asian_Elephant* pAsEle = new Asian_Elephant();
-	return pAsEle;
-}
-
-void Asian_Elephant::Eat(Biological &)
-{
-	hungryTicks = 0;
+	return true;
 }
 
 Uint Asian_Elephant::Eat()
@@ -49,10 +43,10 @@ void Asian_Elephant::Excrete()
 {
 }
 
-bool Asian_Elephant::Mate(Asian_Elephant* ase)
+bool Asian_Elephant::Mate(const Asian_Elephant& ase)
 {
 	bool bPreg = false;
-	if (gd != ase->gd && ageTicks> MATEAGETICK && ase->ageTicks > MATEAGETICK)
+	if (gd != ase.gd && ageTicks > MATEAGETICK && ase.ageTicks > MATEAGETICK)
 	{
 		mateTicks = 0;
 		bPreg = ::IsHappened(PREG_PROB);

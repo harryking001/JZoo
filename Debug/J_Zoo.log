@@ -1,3 +1,40 @@
-﻿  Main.cpp
-c:\users\86135\desktop\jzoo\jzoo\zoo.h(59): warning C4244: “初始化”: 从“unsigned __int64”转换到“int”，可能丢失数据
+﻿  Animal.cpp
+  ArchiveFile.cpp
+c:\users\86135\desktop\jzoo\jzoo\zoo.h(123): warning C4244: “return”: 从“unsigned __int64”转换到“unsigned int”，可能丢失数据
+c:\users\86135\desktop\jzoo\jzoo\zoo.h(136): warning C4244: “初始化”: 从“unsigned __int64”转换到“int”，可能丢失数据
+c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(71): warning C4244: “=”: 从“unsigned __int64”转换到“unsigned int”，可能丢失数据
+c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(205): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(236): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(243): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(250): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(257): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(264): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(271): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(278): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(285): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(292): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(299): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(306): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(313): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(320): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(327): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(350): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(357): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(364): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(371): warning C4018: “<”: 有符号/无符号不匹配
+  Asian_Elephant.cpp
+  Biological.cpp
+  Chordata.cpp
+  Elephant.cpp
+  Main.cpp
+c:\users\86135\desktop\jzoo\jzoo\zoo.h(123): warning C4244: “return”: 从“unsigned __int64”转换到“unsigned int”，可能丢失数据
+c:\users\86135\desktop\jzoo\jzoo\zoo.h(136): warning C4244: “初始化”: 从“unsigned __int64”转换到“int”，可能丢失数据
+  Mammal.cpp
+  Plant.cpp
+  Proboscidea.cpp
+  Zoo.cpp
+c:\users\86135\desktop\jzoo\jzoo\zoo.h(123): warning C4244: “return”: 从“unsigned __int64”转换到“unsigned int”，可能丢失数据
+c:\users\86135\desktop\jzoo\jzoo\zoo.h(136): warning C4244: “初始化”: 从“unsigned __int64”转换到“int”，可能丢失数据
+  正在生成代码...
+c:\users\86135\desktop\jzoo\jzoo\zoo.cpp(101): warning C4172: 返回局部变量或临时变量的地址: ase
   J_Zoo.vcxproj -> C:\Users\86135\Desktop\JZoo\JZoo\Debug\J_Zoo.exe

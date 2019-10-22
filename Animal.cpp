@@ -2,7 +2,7 @@
 
 
 
-Animal::Animal()
+Animal::Animal():gd(UNKNOWGD), hungryTicks(0), pregTicks(0), mateTicks(0), preg(false)
 {
 }
 

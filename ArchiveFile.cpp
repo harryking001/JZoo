@@ -379,7 +379,7 @@ bool ArchiveFile::Save(const Zoo& z)
 	return true;
 }
 
-vector<string> ArchiveFile::SplitString(string str1, string str2)
+vector<string> ArchiveFile::SplitString(const string& str1, const string& str2)
 {
 	vector<string> sVec;
 	string str;

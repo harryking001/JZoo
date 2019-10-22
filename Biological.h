@@ -15,7 +15,7 @@ public:
 	Biological(Uint Id, string Name, string BirthPlace, Uint BirthTicks, Uint AgeTicks, Uint Price, bool Live, string Father, string Mother);
 	virtual ~Biological();//即使定义了析构函数，系统还是会合成默认析构函数
 	virtual void Die();
-	virtual Biological* Breed() = 0;
+	virtual bool Breed() = 0;
 	virtual void Grow(const Uint Ticks);
 	inline void SetId(const Uint Id) { id = Id; }
 	inline void Naming(const string& Name) { name = Name; }

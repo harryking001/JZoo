@@ -2,7 +2,8 @@
 
 
 
-Biological::Biological()
+Biological::Biological():id(0), name("Unknow"), birthPlace("Unknow"), birthTicks(0),
+ageTicks(0), live(false), father("Unknow"), mother("Unknow")
 {
 }
 

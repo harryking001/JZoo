@@ -180,7 +180,7 @@ bool ParseCmd(Zoo& jz)
 			Asian_Elephant ase = jz.RemoveAse(strName);
 			if (ase.GetBirthTicks() != 0)
 			{
-				Uint asePrive = jz.GetAsePrice(&ase);
+				Uint asePrive = jz.GetAsePrice(ase);
 				jz.IncMoney(asePrive);
 				cout << "Goodbye " + strName + "!" << endl;
 			}
@@ -245,8 +245,8 @@ bool ParseCmd(Zoo& jz)
 			string strName;
 			cout << "Please input the name of the elephant you want to feed!" << endl;
 			getline(cin, strName);
-			Asian_Elephant* pAse = jz.FindAse(strName);
-			if (pAse == NULL)
+			Asian_Elephant ase = jz.FindAse(strName);
+			if (ase.CheckLife() == false)
 			{
 				cout << "I'm afraid we don't have this child!" << endl;
 			}
@@ -254,7 +254,7 @@ bool ParseCmd(Zoo& jz)
 			{
 				if (jz.DecMoney(ASE_FOOD_COST))
 				{
-					jz.Feed(pAse);
+					jz.Feed(ase);
 					cout << strName + " is full and happy^_^" << endl;
 				}
 				else
@@ -295,12 +295,12 @@ bool ParseCmd(Zoo& jz)
 				MsgNum--;
                 string strName, strFatherName, strMotherName;
 				gender gd;
-				Asian_Elephant* ase = NULL;
-				while ((ase = jz.FindAse("Unknow")) != NULL)
+				Asian_Elephant ase = jz.FindAse("Unknow");
+				while (ase.CheckLife() == true)
 				{
-					strFatherName = ase->GetFatherName();
-					strMotherName = ase->GetMotherName();
-					gd = ase->GetGender();
+					strFatherName = ase.GetFatherName();
+					strMotherName = ase.GetMotherName();
+					gd = ase.GetGender();
 					if (gd == MALE)
 					{
                         cout << "What name do you want to give " + strFatherName + " and " + strMotherName + "'s new boy?" << endl;
@@ -310,7 +310,7 @@ bool ParseCmd(Zoo& jz)
 						cout << "What name do you want to give " + strFatherName + " and " + strMotherName + "'s new girl?" << endl;
 					}
                     getline(cin, strName);    
-				    ase->Naming(strName);
+				    ase.Naming(strName);
 					cout << strName + ": I like it ^_^" << endl;
 				}  
 		    }

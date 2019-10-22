@@ -72,9 +72,9 @@ public:
 	 *  @return    Uint 食物费用
 	 *             Uint Food cost
 	 */
-	inline Uint Feed(Animal* ani)
+	inline Uint Feed(Animal& ani)
 	{
-		return ani->Eat();
+		return ani.Eat();
 	}
 
 	/**
@@ -115,21 +115,21 @@ public:
 	 *             Increase the funds of the zoo
 	 *  @param     money 增加的资金数
 	 *             money the increased money
-	 *  @return    无
-	 *             void
+	 *  @return    Uint 动物园资金
+	 *             Uint funds
 	 */
-	inline void IncMoney(const Uint money)
+	inline Uint IncMoney(const Uint money)
 	{
-		funds += money;
+		return funds += money;
 	}
 
 	/**
-	 *  @brief     减少动物园资金
+	 *  @brief     花费动物园资金
 	 *             Decrease the funds of the zoo
 	 *  @param     money 减少的资金数
 	 *             money the decreased money
-	 *  @return    无
-	 *             void
+	 *  @return    bool true为余额大于花费，false为余额小于花费
+	 *             bool true if cost money less than balance, false if cost money more than balance
 	 */
 	inline bool DecMoney(const Uint money)
 	{
@@ -140,12 +140,12 @@ public:
 	/**
 	 *  @brief     获取亚洲象价格
 	 *             Get the Asian elephant price
-	 *  @param     pAse 亚洲象类的指针
-	 *             pAse pointer to Asian_Elephant
+	 *  @param     pAse 亚洲象对象的引用
+	 *             pAse Asian_Elephant reference
 	 *  @return    Uint 亚洲象价格
 	 *             Uint price of Asian elephant
 	 */
-	Uint GetAsePrice(Asian_Elephant* pAse);
+	Uint GetAsePrice(const Asian_Elephant& pAse);
 
 	/**
 	 *  @brief     在亚洲象容器中按名字找寻亚洲象
@@ -155,7 +155,7 @@ public:
 	 *  @return    Asian_Elephant* 指向亚洲象类的指针
 	 *             Asian_Elephant* pointer to Asian elephant
 	 */
-	Asian_Elephant* FindAse(const string& name);
+	Asian_Elephant& FindAse(const string& name);
 
 	/**
 	 *  @brief     从亚洲象容器中移除亚洲象对象
@@ -197,14 +197,16 @@ public:
 	/**
 	 *  @brief     将亚洲象对象弹出亚洲象容器
 	 *             Pop the Asian elephant object out of vector
-	 *  @return    无
-	 *             void
+	 *  @return    Asian_Elephant 亚洲象对象拷贝
+	 *             Asian_Elephant Copy of the Asian Elephant object
 	 */
-	inline void PopAse()
+	inline Asian_Elephant PopAse()
 	{
 		mtx_asEle.lock();
+		Asian_Elephant ase = asEle_vec.front();
 		asEle_vec.pop_back();
 		mtx_asEle.unlock();
+		return ase;
 	}
 
 	/**
@@ -228,10 +230,10 @@ public:
 	 *  @return    Asian_Elephant 亚洲象对象拷贝
 	 *             Asian_Elephant Copy of the Asian Elephant object
 	 */
-	inline Asian_Elephant PopFetAse()
+	inline Asian_Elephant& PopFetAse()
 	{
 		mtx_aseFetus.lock();
-		Asian_Elephant ase = aseFetus_que.front();
+		Asian_Elephant& ase = aseFetus_que.front();
 		aseFetus_que.pop();
 		mtx_aseFetus.unlock();
 		return ase;
@@ -313,18 +315,52 @@ public:
 	}
 
 private:
-
+	/**
+	 *  @brief     创建动物园时钟线程
+	 *             Create zoo clock thread
+	 *  @return    无
+	 *             void
+	 */
 	void CreateZooClock();
 private:
+	/** 当前时间 */
+	/** Current Time */
 	string currentTime;
+
+	/** 动物园是否关闭 */
+	/** If zoo is closed */
 	bool close;
+
+	/** 动物园经理（玩家）姓名 */
+	/** Zoo manager(player) name */
 	string managerName;
+
+	/** 动物种类数量 */
+	/** Species numbers */
 	Uint speciesNum;
+
+	/** 动物数量 */
+	/** Animal numbers */
 	Uint animalNum;
+
+	/** 动物园资金 */
+	/** Zoo funds */
 	ULLong funds;
+
+	/** 运行滴答 */
+	/** Operating ticks */
 	Uint opTicks;
+
+	/** 亚洲象容器 */
+	/** Asian elephant vector */
 	vector<Asian_Elephant> asEle_vec;
+
+	/** 亚洲象胎儿容器 */
+	/** Fetus Asian elephant vector */
 	queue<Asian_Elephant> aseFetus_que;
+
+	/** 动物园消息队列 */
+	/** Zoo message queue */
 	queue<string> zooMsg_que;
 
 	std::mutex mtx_Clock;

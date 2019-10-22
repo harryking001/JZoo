@@ -93,7 +93,7 @@ private:
      *  @return    ×Ö·û´®ÈÝÆ÷
 	 *             vector<string>
      */
-	vector<string> SplitString(string str1, string str2);
+	vector<string> SplitString(const string& str1, const string& str2);
 
 	/**
      *  @brief     ½«×Ö·û´®ÈÝÆ÷×ª»»³ÉUintÈÝÆ÷
@@ -103,7 +103,7 @@ private:
      *  @return    UintÈÝÆ÷¶ÔÏó
 	 *             vector<Uint>
      */
-	vector<Uint> CvtStoUnVec(vector<string>);
+	vector<Uint> CvtStoUnVec(vector<string> sVec);
 
 	/**
      *  @brief     ½«×Ö·û´®ÈÝÆ÷×ª»»³É²¼¶ûÈÝÆ÷

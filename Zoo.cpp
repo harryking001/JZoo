@@ -84,20 +84,21 @@ void Zoo::UpdateSpeciesNum()
 
 }
 
-Uint Zoo::GetAsePrice(Asian_Elephant * pAse)
+Uint Zoo::GetAsePrice(const Asian_Elephant& pAse)
 {
-	return pAse->price;
+	return pAse.price;
 }
 
-Asian_Elephant * Zoo::FindAse(const string& name)
+Asian_Elephant& Zoo::FindAse(const string& name)
 {
 	vector<Asian_Elephant>::iterator it = asEle_vec.begin();
 	for (; it != asEle_vec.end(); it++)
 	{
 		if(it->name == name)//Zoo需要访问Biological的name属性
-			return &*it;//将迭代器转换为指针（迭代器是一个类，重载了operator*()操作符，表示容器中相应的对象，再使用&获取容器元素对象的指针）
+			return *it;//将迭代器转换为指针（迭代器是一个类，重载了operator*()操作符，表示容器中相应的对象，再使用&获取容器元素对象的指针）
 	}
-	return NULL;
+	Asian_Elephant ase;
+	return  ase;
 }
 
 Asian_Elephant Zoo::RemoveAse(const string& name)
@@ -113,45 +114,44 @@ Asian_Elephant Zoo::RemoveAse(const string& name)
 			return ase;
 		}	
 	}
-	ase.SetBirthTicks(0);
 	return ase;
 }
 
 mateMsg Zoo::MateAsianElephant(const string& maleName, const string& femaleName)
 {
-	Asian_Elephant* maleAse = FindAse(maleName);
-	Asian_Elephant* femaleAse = FindAse(femaleName);
-	if(maleAse && femaleAse)
+	Asian_Elephant maleAse = FindAse(maleName);
+	Asian_Elephant femaleAse = FindAse(femaleName);
+	if(maleAse.CheckLife() && femaleAse.CheckLife())
 	{
         //Zoo需要访问Animal的name属性以及Asian_Elephant的MATEAGETICK及MATEINTERTICK属性
-		if (maleAse->gd != MALE || femaleAse->gd != FEMALE)
+		if (maleAse.gd != MALE || femaleAse.gd != FEMALE)
 			return SEX_WRONG;
-		else if (maleAse->ageTicks < maleAse->MATEAGETICK)
+		else if (maleAse.ageTicks < maleAse.MATEAGETICK)
 			return MALE_UNDERMATEAGE;
-		else if (femaleAse->ageTicks < femaleAse->MATEAGETICK)
+		else if (femaleAse.ageTicks < femaleAse.MATEAGETICK)
 			return FEMALE_UNDERMATEAGE;
-		else if (maleAse->mateTicks < maleAse->MATEINTERTICK)
+		else if (maleAse.mateTicks < maleAse.MATEINTERTICK)
 			return MALE_NOTREADY;
-		else if (femaleAse->mateTicks < femaleAse->MATEINTERTICK || femaleAse->preg == true)
+		else if (femaleAse.mateTicks < femaleAse.MATEINTERTICK || femaleAse.preg == true)
 			return FEMALE_NOTREADY;
-		else if (femaleAse->father == maleAse->name || maleAse->mother == femaleAse->name ||
-			((maleAse->father == femaleAse->father) && (maleAse->father != "Unknow")) ||
-			((maleAse->mother == femaleAse->mother) && (maleAse->mother != "Unknow")))
+		else if (femaleAse.father == maleAse.name || maleAse.mother == femaleAse.name ||
+			((maleAse.father == femaleAse.father) && (maleAse.father != "Unknow")) ||
+			((maleAse.mother == femaleAse.mother) && (maleAse.mother != "Unknow")))
 			return INBREED;
 	}
-	else if(!maleAse)
+	else if(!maleAse.CheckLife())
 	{
 		return MISSING_MALE;
 	}
-	else if(!femaleAse)
+	else if(!femaleAse.CheckLife())
 	{
 		return MISSING_FEMALE;
 	}
-	bool bPreg = maleAse->Mate(femaleAse);
+	bool bPreg = maleAse.Mate(femaleAse);
 	if(bPreg)
 	{
-		femaleAse->pregTicks = 0;
-		femaleAse->preg = true;
+		femaleAse.pregTicks = 0;
+		femaleAse.preg = true;
 		return PREGNANT;
 	}
 	else
