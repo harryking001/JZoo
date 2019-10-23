@@ -11,7 +11,7 @@ using std::stack;
 using std::to_string;
 
 /**
- * 动物园类
+ * 动物园类用于管理动物园
  * Zoo class which used to manage the zoo
  */
 class Zoo
@@ -22,15 +22,15 @@ class Zoo
 	friend void ShowStatus();
 public:
 	/**
-	 * @brief      构造函数
-	 *             Constructor function.
+	 * @brief      默认构造函数
+	 *             Default Constructor function
 	 *
 	 */
 	Zoo();
 
 	/**
 	 * @brief      析构函数
-	 *             Destructor function.
+	 *             Destructor function
 	 *
 	 */
 	~Zoo();
@@ -155,7 +155,7 @@ public:
 	 *  @return    Asian_Elephant* 指向亚洲象类的指针
 	 *             Asian_Elephant* pointer to Asian elephant
 	 */
-	Asian_Elephant& FindAse(const string& name);
+	bool FindAse(const string& name, Asian_Elephant& ase);
 
 	/**
 	 *  @brief     从亚洲象容器中移除亚洲象对象

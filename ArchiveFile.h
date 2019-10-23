@@ -20,8 +20,8 @@ class ArchiveFile
 {
 public:
 	/**
-	 * @brief      构造函数
-	 *             Constructor function.
+	 * @brief      默认构造函数
+	 *             Default constructor function.
 	 *
 	 */
 	ArchiveFile();

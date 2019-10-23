@@ -74,7 +74,7 @@ void Asian_Elephant::Grow(Uint Ticks)
 	price = ageTicks < 3000 ? 50000 + 10 * ageTicks : 80000 - 10 * (ageTicks - 3000);
 }
 
-int Asian_Elephant::CheckHungry() const
+hungryMsg Asian_Elephant::CheckHungry() const
 {
 	if (hungryTicks == HUNGRYGTICKS)
 		return HUNGRY;

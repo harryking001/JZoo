@@ -245,8 +245,9 @@ bool ParseCmd(Zoo& jz)
 			string strName;
 			cout << "Please input the name of the elephant you want to feed!" << endl;
 			getline(cin, strName);
-			Asian_Elephant ase = jz.FindAse(strName);
-			if (ase.CheckLife() == false)
+			Asian_Elephant ase;
+			bool bFind = jz.FindAse(strName, ase);
+			if (!bFind)
 			{
 				cout << "I'm afraid we don't have this child!" << endl;
 			}
@@ -295,8 +296,9 @@ bool ParseCmd(Zoo& jz)
 				MsgNum--;
                 string strName, strFatherName, strMotherName;
 				gender gd;
-				Asian_Elephant ase = jz.FindAse("Unknow");
-				while (ase.CheckLife() == true)
+				Asian_Elephant ase;
+				bool bFind = jz.FindAse("Unknow", ase);
+				while (bFind)
 				{
 					strFatherName = ase.GetFatherName();
 					strMotherName = ase.GetMotherName();

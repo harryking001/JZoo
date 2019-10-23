@@ -1,5 +1,6 @@
 ﻿  Animal.cpp
   ArchiveFile.cpp
+c:\users\86135\desktop\jzoo\jzoo\zoo.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
 c:\users\86135\desktop\jzoo\jzoo\zoo.h(123): warning C4244: “return”: 从“unsigned __int64”转换到“unsigned int”，可能丢失数据
 c:\users\86135\desktop\jzoo\jzoo\zoo.h(136): warning C4244: “初始化”: 从“unsigned __int64”转换到“int”，可能丢失数据
 c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(71): warning C4244: “=”: 从“unsigned __int64”转换到“unsigned int”，可能丢失数据
@@ -26,15 +27,18 @@ c:\users\86135\desktop\jzoo\jzoo\archivefile.cpp(371): warning C4018: “<”: �
   Biological.cpp
   Chordata.cpp
   Elephant.cpp
+  Gloable.cpp
+c:\users\86135\desktop\jzoo\jzoo\gloable.cpp(7): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
   Main.cpp
+c:\users\86135\desktop\jzoo\jzoo\zoo.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
 c:\users\86135\desktop\jzoo\jzoo\zoo.h(123): warning C4244: “return”: 从“unsigned __int64”转换到“unsigned int”，可能丢失数据
 c:\users\86135\desktop\jzoo\jzoo\zoo.h(136): warning C4244: “初始化”: 从“unsigned __int64”转换到“int”，可能丢失数据
   Mammal.cpp
   Plant.cpp
   Proboscidea.cpp
   Zoo.cpp
+c:\users\86135\desktop\jzoo\jzoo\zoo.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
 c:\users\86135\desktop\jzoo\jzoo\zoo.h(123): warning C4244: “return”: 从“unsigned __int64”转换到“unsigned int”，可能丢失数据
 c:\users\86135\desktop\jzoo\jzoo\zoo.h(136): warning C4244: “初始化”: 从“unsigned __int64”转换到“int”，可能丢失数据
   正在生成代码...
-c:\users\86135\desktop\jzoo\jzoo\zoo.cpp(101): warning C4172: 返回局部变量或临时变量的地址: ase
   J_Zoo.vcxproj -> C:\Users\86135\Desktop\JZoo\JZoo\Debug\J_Zoo.exe

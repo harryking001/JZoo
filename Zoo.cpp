@@ -89,16 +89,18 @@ Uint Zoo::GetAsePrice(const Asian_Elephant& pAse)
 	return pAse.price;
 }
 
-Asian_Elephant& Zoo::FindAse(const string& name)
+bool Zoo::FindAse(const string& name, Asian_Elephant& ase)
 {
 	vector<Asian_Elephant>::iterator it = asEle_vec.begin();
 	for (; it != asEle_vec.end(); it++)
 	{
-		if(it->name == name)//Zoo需要访问Biological的name属性
-			return *it;//将迭代器转换为指针（迭代器是一个类，重载了operator*()操作符，表示容器中相应的对象，再使用&获取容器元素对象的指针）
+		if (it->name == name)//Zoo需要访问Biological的name属性
+		{
+            ase = *it;//将迭代器转换为指针（迭代器是一个类，重载了operator*()操作符，表示容器中相应的对象，再使用&获取容器元素对象的指针）
+			return true;
+		}	
 	}
-	Asian_Elephant ase;
-	return  ase;
+	return  false;
 }
 
 Asian_Elephant Zoo::RemoveAse(const string& name)
@@ -119,9 +121,10 @@ Asian_Elephant Zoo::RemoveAse(const string& name)
 
 mateMsg Zoo::MateAsianElephant(const string& maleName, const string& femaleName)
 {
-	Asian_Elephant maleAse = FindAse(maleName);
-	Asian_Elephant femaleAse = FindAse(femaleName);
-	if(maleAse.CheckLife() && femaleAse.CheckLife())
+	Asian_Elephant maleAse, femaleAse;
+	bool bFindMale = FindAse(maleName, maleAse);
+    bool bFindFemale = FindAse(femaleName, femaleAse);
+	if(bFindMale && bFindFemale)
 	{
         //Zoo需要访问Animal的name属性以及Asian_Elephant的MATEAGETICK及MATEINTERTICK属性
 		if (maleAse.gd != MALE || femaleAse.gd != FEMALE)
