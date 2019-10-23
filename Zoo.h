@@ -11,8 +11,8 @@ using std::stack;
 using std::to_string;
 
 /**
- * ¶¯ÎïÔ°Àà
- * Zoo class which used to load and save zoo information
+ * åŠ¨ç‰©å›­ç±»
+ * Zoo class which used to manage the zoo
  */
 class Zoo
 {
@@ -22,41 +22,41 @@ class Zoo
 	friend void ShowStatus();
 public:
 	/**
-	 * @brief      ¹¹Ôìº¯Êı
+	 * @brief      æ„é€ å‡½æ•°
 	 *             Constructor function.
 	 *
 	 */
 	Zoo();
 
 	/**
-	 * @brief      Îö¹¹º¯Êı
+	 * @brief      ææ„å‡½æ•°
 	 *             Destructor function.
 	 *
 	 */
 	~Zoo();
 
 	/**
-	 *  @brief     »ñÈ¡Ê±¼ä
+	 *  @brief     è·å–æ—¶é—´
 	 *             Get time
-	 *  @return    Ê±¼ä×Ö·û´®
+	 *  @return    æ—¶é—´å­—ç¬¦ä¸²
 	 *             string
 	 */
     string GetCurTime();
 
 	/**
-	 *  @brief     ¸üĞÂ¶¯ÎïÖÖÀàÊı
+	 *  @brief     æ›´æ–°åŠ¨ç‰©ç§ç±»æ•°é‡
 	 *             Update the species number
-	 *  @return    ÎŞ
+	 *  @return    æ— 
 	 *             void
 	 */
 	void UpdateSpeciesNum();
 	
 	/**
-	 *  @brief     ¹ÍÓÃ¶¯ÎïÔ°¾­Àí
+	 *  @brief     é›‡ç”¨åŠ¨ç‰©å›­ç»ç†
 	 *             Hire zoo manager
-	 *  @param     strManager ¾­ÀíĞÕÃû£¨Íæ¼ÒĞÕÃû£©
+	 *  @param     strManager ç»ç†å§“åï¼ˆç©å®¶å§“åï¼‰
 	 *             strManager manager name(player name)
-	 *  @return    ÎŞ
+	 *  @return    æ— 
 	 *             void
 	 */
 	inline void HireManager(const string& strManager)
@@ -65,11 +65,11 @@ public:
 	}
 
 	/**
-	 *  @brief     Î¹¶¯Îï
+	 *  @brief     å–‚åŠ¨ç‰©
 	 *             Feed animal
-	 *  @param     ani animalÀàÖ¸Õë
-	 *             ani pointer to class animal
-	 *  @return    Uint Ê³Îï·ÑÓÃ
+	 *  @param     ani åŠ¨ç‰©ç±»å¯¹è±¡å¼•ç”¨
+	 *             ani Animal object reference
+	 *  @return    Uint é£Ÿç‰©è´¹ç”¨
 	 *             Uint Food cost
 	 */
 	inline Uint Feed(Animal& ani)
@@ -78,9 +78,9 @@ public:
 	}
 
 	/**
-	 *  @brief     ¶¯ÎïÔ°¶¯ÎïµÄ×ÜÊıÁ¿¼ÓÒ»
+	 *  @brief     åŠ¨ç‰©å›­åŠ¨ç‰©çš„æ€»æ•°é‡åŠ ä¸€
 	 *             Sum of the zoo animal plus one
-	 *  @return    Uint ¶¯ÎïÔ°¶¯Îï×ÜÊı
+	 *  @return    Uint åŠ¨ç‰©å›­åŠ¨ç‰©æ€»æ•°
 	 *             Uint sum of the zoo animal
 	 */
 	inline Uint IncAnimalNum()
@@ -89,9 +89,9 @@ public:
 	}
 
 	/**
-	 *  @brief     ¶¯ÎïÔ°¶¯ÎïµÄ×ÜÊıÁ¿¼õÒ»
+	 *  @brief     åŠ¨ç‰©å›­åŠ¨ç‰©çš„æ€»æ•°é‡å‡ä¸€
 	 *             Sum of the zoo animal minus one
-	 *  @return    Uint ¶¯ÎïÔ°¶¯Îï×ÜÊı
+	 *  @return    Uint åŠ¨ç‰©å›­åŠ¨ç‰©æ€»æ•°
 	 *             Uint sum of the zoo animal
 	 */
 	inline Uint DecAnimalNum()
@@ -100,9 +100,9 @@ public:
 	}
 
 	/**
-	 *  @brief     »ñÈ¡¶¯ÎïÔ°µÄµÎ´ğÊı
+	 *  @brief     è·å–åŠ¨ç‰©å›­çš„æ»´ç­”æ•°
 	 *             Get the ticks of the zoo
-	 *  @return    Uint ¶¯ÎïÔ°µÄµÎ´ğÊı
+	 *  @return    Uint åŠ¨ç‰©å›­çš„æ»´ç­”æ•°
 	 *             Uint ticks of the zoo
 	 */
 	inline Uint GetTicks() const
@@ -111,11 +111,11 @@ public:
 	}
 
 	/**
-	 *  @brief     Ôö¼Ó¶¯ÎïÔ°×Ê½ğ
+	 *  @brief     å¢åŠ åŠ¨ç‰©å›­èµ„é‡‘
 	 *             Increase the funds of the zoo
-	 *  @param     money Ôö¼ÓµÄ×Ê½ğÊı
+	 *  @param     money å¢åŠ çš„èµ„é‡‘æ•°
 	 *             money the increased money
-	 *  @return    Uint ¶¯ÎïÔ°×Ê½ğ
+	 *  @return    Uint åŠ¨ç‰©å›­èµ„é‡‘
 	 *             Uint funds
 	 */
 	inline Uint IncMoney(const Uint money)
@@ -124,11 +124,11 @@ public:
 	}
 
 	/**
-	 *  @brief     »¨·Ñ¶¯ÎïÔ°×Ê½ğ
+	 *  @brief     èŠ±è´¹åŠ¨ç‰©å›­èµ„é‡‘
 	 *             Decrease the funds of the zoo
-	 *  @param     money ¼õÉÙµÄ×Ê½ğÊı
+	 *  @param     money å‡å°‘çš„èµ„é‡‘æ•°
 	 *             money the decreased money
-	 *  @return    bool trueÎªÓà¶î´óÓÚ»¨·Ñ£¬falseÎªÓà¶îĞ¡ÓÚ»¨·Ñ
+	 *  @return    bool trueä¸ºä½™é¢å¤§äºèŠ±è´¹ï¼Œfalseä¸ºä½™é¢å°äºèŠ±è´¹
 	 *             bool true if cost money less than balance, false if cost money more than balance
 	 */
 	inline bool DecMoney(const Uint money)
@@ -138,53 +138,53 @@ public:
 	}
 	
 	/**
-	 *  @brief     »ñÈ¡ÑÇÖŞÏó¼Û¸ñ
+	 *  @brief     è·å–äºšæ´²è±¡ä»·æ ¼
 	 *             Get the Asian elephant price
-	 *  @param     pAse ÑÇÖŞÏó¶ÔÏóµÄÒıÓÃ
-	 *             pAse Asian_Elephant reference
-	 *  @return    Uint ÑÇÖŞÏó¼Û¸ñ
+	 *  @param     pAse äºšæ´²è±¡å¯¹è±¡çš„å¼•ç”¨
+	 *             pAse Asian_Elephant object reference
+	 *  @return    Uint äºšæ´²è±¡ä»·æ ¼
 	 *             Uint price of Asian elephant
 	 */
 	Uint GetAsePrice(const Asian_Elephant& pAse);
 
 	/**
-	 *  @brief     ÔÚÑÇÖŞÏóÈİÆ÷ÖĞ°´Ãû×ÖÕÒÑ°ÑÇÖŞÏó
+	 *  @brief     åœ¨äºšæ´²è±¡å®¹å™¨ä¸­æŒ‰åå­—æ‰¾å¯»äºšæ´²è±¡
 	 *             Find Asian elephant though name from vector
-	 *  @param     name ÑÇÖŞÏóÃû×Ö
+	 *  @param     name äºšæ´²è±¡åå­—
 	 *             name name of the Asian elephant
-	 *  @return    Asian_Elephant* Ö¸ÏòÑÇÖŞÏóÀàµÄÖ¸Õë
+	 *  @return    Asian_Elephant* æŒ‡å‘äºšæ´²è±¡ç±»çš„æŒ‡é’ˆ
 	 *             Asian_Elephant* pointer to Asian elephant
 	 */
 	Asian_Elephant& FindAse(const string& name);
 
 	/**
-	 *  @brief     ´ÓÑÇÖŞÏóÈİÆ÷ÖĞÒÆ³ıÑÇÖŞÏó¶ÔÏó
+	 *  @brief     ä»äºšæ´²è±¡å®¹å™¨ä¸­ç§»é™¤äºšæ´²è±¡å¯¹è±¡
 	 *             Remove Asian elephant from the vector
-	 *  @param     name ÑÇÖŞÏóÃû×Ö
+	 *  @param     name äºšæ´²è±¡åå­—
 	 *             name name of the Asian elephant
-	 *  @return    Asian_Elephant ±»ÒÆ³ıµÄÑÇÖŞÏó¶ÔÏóµÄ¿½±´
+	 *  @return    Asian_Elephant è¢«ç§»é™¤çš„äºšæ´²è±¡å¯¹è±¡çš„æ‹·è´
 	 *             Asian_Elephant the copy of the removed Asian elephant object
 	 */
 	Asian_Elephant RemoveAse(const string& name);
 
 	/**
-	 *  @brief     ÑÇÖŞÏó½»Åä
+	 *  @brief     äºšæ´²è±¡äº¤é…
 	 *             Mate the two Asian elephant
-	 *  @param     maleName ¹«ÑÇÖŞÏóÃû×Ö
+	 *  @param     maleName å…¬äºšæ´²è±¡åå­—
 	 *             maleName name of the Asian elephant
-	 *  @param     femaleName Ä¸ÑÇÖŞÏóÃû×Ö
+	 *  @param     femaleName æ¯äºšæ´²è±¡åå­—
 	 *             femaleName name of the Asian elephant
-	 *  @return    mateMsg ½»ÅäÏûÏ¢
+	 *  @return    mateMsg äº¤é…æ¶ˆæ¯
 	 *             mateMsg mate message
 	 */
 	mateMsg MateAsianElephant(const string& maleName, const string& femaleName);
 
 	/**
-	 *  @brief     ½«ÑÇÖŞÏó¶ÔÏóÒıÓÃÑ¹ÈëÑÇÖŞÏóÈİÆ÷
+	 *  @brief     å°†äºšæ´²è±¡å¯¹è±¡å¼•ç”¨å‹å…¥äºšæ´²è±¡å®¹å™¨
 	 *             Push the Asian elephant object reference into vector
-	 *  @param     ase ÑÇÖŞÏó¶ÔÏóÒıÓÃ
+	 *  @param     ase äºšæ´²è±¡å¯¹è±¡å¼•ç”¨
 	 *             ase Asian elephant object reference
-	 *  @return    ÎŞ
+	 *  @return    æ— 
 	 *             void
 	 */
 	inline void PushAse(const Asian_Elephant& ase)
@@ -195,9 +195,9 @@ public:
 	}
 
 	/**
-	 *  @brief     ½«ÑÇÖŞÏó¶ÔÏóµ¯³öÑÇÖŞÏóÈİÆ÷
+	 *  @brief     å°†äºšæ´²è±¡å¯¹è±¡å¼¹å‡ºäºšæ´²è±¡å®¹å™¨
 	 *             Pop the Asian elephant object out of vector
-	 *  @return    Asian_Elephant ÑÇÖŞÏó¶ÔÏó¿½±´
+	 *  @return    Asian_Elephant äºšæ´²è±¡å¯¹è±¡æ‹·è´
 	 *             Asian_Elephant Copy of the Asian Elephant object
 	 */
 	inline Asian_Elephant PopAse()
@@ -210,11 +210,11 @@ public:
 	}
 
 	/**
-	 *  @brief     ½«ÑÇÖŞÏó¶ÔÏóÒıÓÃÑ¹ÈëÑÇÖŞÏóÌ¥¶ù¶ÓÁĞ
+	 *  @brief     å°†äºšæ´²è±¡å¯¹è±¡å¼•ç”¨å‹å…¥äºšæ´²è±¡èƒå„¿é˜Ÿåˆ—
 	 *             Push the fetus Asian elephant object reference into queue
-	 *  @param     ase ÑÇÖŞÏó¶ÔÏóÒıÓÃ
+	 *  @param     ase äºšæ´²è±¡å¯¹è±¡å¼•ç”¨
 	 *             ase Asian elephant object reference
-	 *  @return    ÎŞ
+	 *  @return    æ— 
 	 *             void
 	 */
 	inline void PushFetAse(const Asian_Elephant& fetAse)
@@ -225,26 +225,26 @@ public:
 	}
 
 	/**
-	 *  @brief     ½«ÑÇÖŞÏó¶ÔÏóµ¯³öÌ¥¶ùÑÇÖŞÏó¶ÓÁĞ
+	 *  @brief     å°†äºšæ´²è±¡å¯¹è±¡å¼¹å‡ºèƒå„¿äºšæ´²è±¡é˜Ÿåˆ—
 	 *             Pop the Fetus Asian elephant object out of queue
-	 *  @return    Asian_Elephant ÑÇÖŞÏó¶ÔÏó¿½±´
+	 *  @return    Asian_Elephant äºšæ´²è±¡å¯¹è±¡æ‹·è´
 	 *             Asian_Elephant Copy of the Asian Elephant object
 	 */
-	inline Asian_Elephant& PopFetAse()
+	inline Asian_Elephant PopFetAse()
 	{
 		mtx_aseFetus.lock();
-		Asian_Elephant& ase = aseFetus_que.front();
+		Asian_Elephant ase = aseFetus_que.front();
 		aseFetus_que.pop();
 		mtx_aseFetus.unlock();
 		return ase;
 	}
 
 	/**
-	 *  @brief     ½«¶¯ÎïÔ°ÏûÏ¢Ñ¹ÈëÏûÏ¢¶ÓÁĞ
+	 *  @brief     å°†åŠ¨ç‰©å›­æ¶ˆæ¯å‹å…¥æ¶ˆæ¯é˜Ÿåˆ—
 	 *             Push the zoo message into queue
-	 *  @param     strMsg ÏûÏ¢×Ö·û´®ÒıÓÃ
+	 *  @param     strMsg æ¶ˆæ¯å­—ç¬¦ä¸²å¼•ç”¨
 	 *             strMsg Message reference
-	 *  @return    ÎŞ
+	 *  @return    æ— 
 	 *             void
 	 */
 	inline void PushMsg(const string& strMsg)
@@ -255,9 +255,9 @@ public:
 	}
 
 	/**
-	 *  @brief     ½«¶¯ÎïÔ°ÏûÏ¢µ¯³öÏûÏ¢¶ÓÁĞ
+	 *  @brief     å°†åŠ¨ç‰©å›­æ¶ˆæ¯å¼¹å‡ºæ¶ˆæ¯é˜Ÿåˆ—
 	 *             Pop the zoo message out of queue
-	 *  @return    ÎŞ
+	 *  @return    æ— 
 	 *             void
 	 */
 	inline void PopMsg()
@@ -268,9 +268,9 @@ public:
 	}
 
 	/**
-	 *  @brief     »ñÈ¡ÏûÏ¢¶ÓÁĞÖĞµÄ×îÔçµÄÏûÏ¢
+	 *  @brief     è·å–æ¶ˆæ¯é˜Ÿåˆ—ä¸­çš„æœ€æ—©çš„æ¶ˆæ¯
 	 *             Get the earliest message in the queue
-	 *  @return    string ×îÔçµÄÏûÏ¢×Ö·û´®
+	 *  @return    string æœ€æ—©çš„æ¶ˆæ¯å­—ç¬¦ä¸²
 	 *             string the earliest message
 	 */
 	inline string FrontMsg()
@@ -282,9 +282,9 @@ public:
 	}
 
 	/**
-	 *  @brief     ÅĞ¶ÏÏûÏ¢¶ÓÁĞÊÇ·ñÎª¿Õ
+	 *  @brief     åˆ¤æ–­æ¶ˆæ¯é˜Ÿåˆ—æ˜¯å¦ä¸ºç©º
 	 *             If the message queue is empty
-	 *  @return    bool trueÎª¿Õ£¬falseÎª·Ç¿Õ
+	 *  @return    bool trueä¸ºç©ºï¼Œfalseä¸ºéç©º
 	 *             bool true if empty, false if not empty
 	 */
 	inline bool IsMsgEmpty() const
@@ -293,9 +293,9 @@ public:
 	}
 
 	/**
-	 *  @brief     ¶¯ÎïÔ°Ê±ÖÓ»¥³âÁ¿¼ÓËø
+	 *  @brief     åŠ¨ç‰©å›­æ—¶é’Ÿäº’æ–¥é‡åŠ é”
 	 *             Zoo clock mutex lock
-	 *  @return    ÎŞ
+	 *  @return    æ— 
 	 *             void
 	 */
 	inline void LockMtxClock()
@@ -304,9 +304,9 @@ public:
 	}
 
 	/**
-	 *  @brief     ¶¯ÎïÔ°Ê±ÖÓ»¥³âÁ¿½âËø
+	 *  @brief     åŠ¨ç‰©å›­æ—¶é’Ÿäº’æ–¥é‡è§£é”
 	 *             Zoo clock mutex unlock
-	 *  @return    ÎŞ
+	 *  @return    æ— 
 	 *             void
 	 */
 	inline void UnlockMtxClock()
@@ -316,50 +316,50 @@ public:
 
 private:
 	/**
-	 *  @brief     ´´½¨¶¯ÎïÔ°Ê±ÖÓÏß³Ì
+	 *  @brief     åˆ›å»ºåŠ¨ç‰©å›­æ—¶é’Ÿçº¿ç¨‹
 	 *             Create zoo clock thread
-	 *  @return    ÎŞ
+	 *  @return    æ— 
 	 *             void
 	 */
 	void CreateZooClock();
 private:
-	/** µ±Ç°Ê±¼ä */
+	/** å½“å‰æ—¶é—´ */
 	/** Current Time */
 	string currentTime;
 
-	/** ¶¯ÎïÔ°ÊÇ·ñ¹Ø±Õ */
+	/** åŠ¨ç‰©å›­æ˜¯å¦å…³é—­ */
 	/** If zoo is closed */
 	bool close;
 
-	/** ¶¯ÎïÔ°¾­Àí£¨Íæ¼Ò£©ĞÕÃû */
+	/** åŠ¨ç‰©å›­ç»ç†ï¼ˆç©å®¶ï¼‰å§“å */
 	/** Zoo manager(player) name */
 	string managerName;
 
-	/** ¶¯ÎïÖÖÀàÊıÁ¿ */
+	/** åŠ¨ç‰©ç§ç±»æ•°é‡ */
 	/** Species numbers */
 	Uint speciesNum;
 
-	/** ¶¯ÎïÊıÁ¿ */
+	/** åŠ¨ç‰©æ•°é‡ */
 	/** Animal numbers */
 	Uint animalNum;
 
-	/** ¶¯ÎïÔ°×Ê½ğ */
+	/** åŠ¨ç‰©å›­èµ„é‡‘ */
 	/** Zoo funds */
 	ULLong funds;
 
-	/** ÔËĞĞµÎ´ğ */
+	/** è¿è¡Œæ»´ç­” */
 	/** Operating ticks */
 	Uint opTicks;
 
-	/** ÑÇÖŞÏóÈİÆ÷ */
+	/** äºšæ´²è±¡å®¹å™¨ */
 	/** Asian elephant vector */
 	vector<Asian_Elephant> asEle_vec;
 
-	/** ÑÇÖŞÏóÌ¥¶ùÈİÆ÷ */
+	/** äºšæ´²è±¡èƒå„¿å®¹å™¨ */
 	/** Fetus Asian elephant vector */
 	queue<Asian_Elephant> aseFetus_que;
 
-	/** ¶¯ÎïÔ°ÏûÏ¢¶ÓÁĞ */
+	/** åŠ¨ç‰©å›­æ¶ˆæ¯é˜Ÿåˆ— */
 	/** Zoo message queue */
 	queue<string> zooMsg_que;
 
