@@ -134,6 +134,7 @@
     <ClCompile Include="Biological.cpp" />
     <ClCompile Include="Chordata.cpp" />
     <ClCompile Include="Elephant.cpp" />
+    <ClCompile Include="Gloable.cpp" />
     <ClCompile Include="Mammal.cpp" />
     <ClCompile Include="Plant.cpp" />
     <ClCompile Include="Proboscidea.cpp" />

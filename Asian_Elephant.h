@@ -8,21 +8,49 @@ class Asian_Elephant :
 	public Elephant
 {
 	friend class ArchiveFile;
+	friend class Zoo;
+	friend void ShowStatus();
 public:
 	Asian_Elephant();
-	Asian_Elephant(Uint Id, string Name, Uint BirthTicks, gender Gd);
-	Asian_Elephant(Uint Id, string Name, string BirthPlace, Uint BirthTicks, Uint AgeTicks, Uint Price, 
-		bool Live, Uint Weight, Uint Height, Uint Width, Uint Length, gender Gd, Uint HungryTicks, Uint PregTicks, Uint MateTicks, bool Preg);
+	Asian_Elephant(Uint Id, string Name, Uint BirthTicks, string Father, string Mother, gender Gd);
+	Asian_Elephant(Uint Id, string Name, string BirthPlace, Uint BirthTicks, Uint AgeTicks, Uint Price, bool Live, string Father, string Mother,
+		 Uint Weight, Uint Height, Uint Width, Uint Length, gender Gd, Uint HungryTicks, Uint PregTicks, Uint MateTicks, bool Preg);
 	virtual ~Asian_Elephant();
-	virtual Asian_Elephant* Breed();
-	void Eat(Biological&);
-	void Eat();
+	virtual bool Breed();
+	Uint Eat();
 	void Excrete();
-	bool Mate(Asian_Elephant&);
-	void Grow(Uint Ticks);
-
+	bool Mate(const Asian_Elephant& ase);
+	void Grow(const Uint Ticks);
+	virtual hungryMsg CheckHungry() const;
+	virtual bool CheckBreed() const;
+	virtual bool CheckLife() const;
 private:
-	const Uint MATEAGETICK = 100000;
-	const Uint MATEINTERTICK = 5000;
+	/** 最小交配年龄滴答数 */
+	/** Minimum mate ticks */
+	static const Uint MATEAGETICK = 50;
+
+	/** 最小交配间隔滴答数 */
+	/** Minimum mate interval ticks */
+	static const Uint MATEINTERTICK = 10;
+
+	/** 饥饿滴答数 */
+	/** Hungry ticks */
+	static const Uint HUNGRYGTICKS = 100;
+
+	/** 饥饿警告滴答数 */
+	/** Hungry warning ticks */
+	static const Uint HUNGRYWARNINGTICKS = 150;
+
+	/** 饿死滴答数 */
+	/** Hungry die ticks */
+	static const Uint HUNGRYDIETICKS = 300;
+
+	/** 怀孕周期滴答数 */
+	/** Pregnant ticks */
+	static const Uint PREGTICKS = 30;
+
+	/** 寿命滴答数 */
+	/** Life ticks */
+	static const Uint LIVETICKS = 500;
 };
 

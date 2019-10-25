@@ -1,14 +1,56 @@
 #include "Zoo.h"
 
-void RunZooClock(Zoo* z)
+
+void RunZooClock(Zoo& z)
 {
-	while (!z->close)
+	while (!z.close)
 	{
-		z->opTicks++;
-		for (vector<Asian_Elephant>::iterator it = z->asEle_vec.begin(); it != z->asEle_vec.end(); it++)
+		z.LockMtxClock();
+		z.opTicks++;
+		for (vector<Asian_Elephant>::iterator it = z.asEle_vec.begin(); it != z.asEle_vec.end(); )
 		{
-			it->Grow(z->opTicks);
+			it->Grow(z.opTicks);
+			string strName = "Asian elephant " + it->GetName();
+			string strMsg;
+
+			if (!it->CheckLife())
+			{
+				strMsg = strName + " had a wonderful life and went to the heaven.";
+				z.PushMsg(strMsg);
+				it->Die();
+				it = z.asEle_vec.erase(it);
+				continue;
+			}
+			hungryMsg h = (hungryMsg)it->CheckHungry();
+			
+			switch (h)
+			{
+			case HUNGRY:
+				strMsg = strName + " is hungry!";
+				z.PushMsg(strMsg);
+				break;
+			case HUNGRYWARNING:
+				strMsg = strName + " is very hungry! Please feed him/her ASAP!";
+				z.PushMsg(strMsg);
+				break;
+			case HUNGRYDIE:
+				strMsg = strName + " died of hunger!";
+				z.PushMsg(strMsg);
+				it->Die();
+				it = z.asEle_vec.erase(it);
+				continue;	
+			}
+            
+			bool bBreed = it->CheckBreed();
+			if (bBreed)
+			{
+				it->Breed();
+				strMsg = strName + " is having baby...";
+				z.PushMsg(strMsg);
+			}	
+			it++;
 		}
+		z.UnlockMtxClock();
 		Sleep(1000);
 	}
 }
@@ -42,18 +84,86 @@ void Zoo::UpdateSpeciesNum()
 
 }
 
-Asian_Elephant & Zoo::Find(const string name)
+Uint Zoo::GetAsePrice(const Asian_Elephant& pAse)
+{
+	return pAse.price;
+}
+
+bool Zoo::FindAse(const string& name, Asian_Elephant& ase)
 {
 	vector<Asian_Elephant>::iterator it = asEle_vec.begin();
 	for (; it != asEle_vec.end(); it++)
 	{
-		if(it->)
+		if (it->name == name)//Zoo需要访问Biological的name属性
+		{
+            ase = *it;//将迭代器转换为指针（迭代器是一个类，重载了operator*()操作符，表示容器中相应的对象，再使用&获取容器元素对象的指针）
+			return true;
+		}	
 	}
+	return  false;
+}
+
+Asian_Elephant Zoo::RemoveAse(const string& name)
+{
+	vector<Asian_Elephant>::iterator it = asEle_vec.begin();
+	Asian_Elephant ase;
+	for (; it != asEle_vec.end(); it++)
+	{
+		if (it->name == name)//Zoo需要访问Biological的name属性
+		{
+			ase = *it;
+            asEle_vec.erase(it);
+			return ase;
+		}	
+	}
+	return ase;
+}
+
+mateMsg Zoo::MateAsianElephant(const string& maleName, const string& femaleName)
+{
+	Asian_Elephant maleAse, femaleAse;
+	bool bFindMale = FindAse(maleName, maleAse);
+    bool bFindFemale = FindAse(femaleName, femaleAse);
+	if(bFindMale && bFindFemale)
+	{
+        //Zoo需要访问Animal的name属性以及Asian_Elephant的MATEAGETICK及MATEINTERTICK属性
+		if (maleAse.gd != MALE || femaleAse.gd != FEMALE)
+			return SEX_WRONG;
+		else if (maleAse.ageTicks < maleAse.MATEAGETICK)
+			return MALE_UNDERMATEAGE;
+		else if (femaleAse.ageTicks < femaleAse.MATEAGETICK)
+			return FEMALE_UNDERMATEAGE;
+		else if (maleAse.mateTicks < maleAse.MATEINTERTICK)
+			return MALE_NOTREADY;
+		else if (femaleAse.mateTicks < femaleAse.MATEINTERTICK || femaleAse.preg == true)
+			return FEMALE_NOTREADY;
+		else if (femaleAse.father == maleAse.name || maleAse.mother == femaleAse.name ||
+			((maleAse.father == femaleAse.father) && (maleAse.father != "Unknow")) ||
+			((maleAse.mother == femaleAse.mother) && (maleAse.mother != "Unknow")))
+			return INBREED;
+	}
+	else if(!maleAse.CheckLife())
+	{
+		return MISSING_MALE;
+	}
+	else if(!femaleAse.CheckLife())
+	{
+		return MISSING_FEMALE;
+	}
+	bool bPreg = maleAse.Mate(femaleAse);
+	if(bPreg)
+	{
+		femaleAse.pregTicks = 0;
+		femaleAse.preg = true;
+		return PREGNANT;
+	}
+	else
+		return NOTPREGNANT;
 }
 
 void Zoo::CreateZooClock()
 {
-	std::thread t1(RunZooClock,this);
+	std::thread t1(::RunZooClock, std::ref(*this));
 	t1.detach();
 }
 
